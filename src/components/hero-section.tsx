@@ -174,11 +174,11 @@ export function HeroSection() {
               {/* Main Image Container - Professional and Clean */}
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
                 {/* Subtle background glow */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-600/10 rounded-full blur-2xl" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-600/10 rounded-2xl blur-2xl" />
 
-                {/* Professional frame */}
-                <div className="relative bg-white dark:bg-slate-800 rounded-full p-3 shadow-2xl border border-slate-200/50 dark:border-slate-700/50">
-                  <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                {/* Professional frame - Square with rounded corners */}
+                <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-2xl border border-slate-200/50 dark:border-slate-700/50 h-full">
+                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
                     <img
                       src={displayAvatar}
                       alt={displayName}
@@ -193,22 +193,9 @@ export function HeroSection() {
                       }}
                     />
                     {/* Professional overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                   </div>
                 </div>
-              </div>
-
-              {/* Static Professional Elements */}
-              <div className="absolute -top-3 -right-3 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
-                <div className="text-lg">🤖</div>
-              </div>
-
-              <div className="absolute -bottom-3 -left-3 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
-                <div className="text-lg">⚡</div>
-              </div>
-
-              <div className="absolute top-1/2 -left-6 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
-                <div className="text-lg">🎯</div>
               </div>
             </div>
           </motion.div>

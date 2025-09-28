@@ -4,65 +4,65 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 const skills = [
-  { 
-    name: "Python", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", 
-    color: "from-blue-500 to-yellow-500" 
+  {
+    name: "Python",
+    logo: "https://cdn.simpleicons.org/python/3776AB",
+    color: "from-blue-500 to-yellow-500"
   },
-  { 
-    name: "React", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", 
-    color: "from-blue-400 to-cyan-400" 
+  {
+    name: "React",
+    logo: "https://cdn.simpleicons.org/react/61DAFB",
+    color: "from-blue-400 to-cyan-400"
   },
-  { 
-    name: "Next.js", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", 
-    color: "from-black to-gray-600" 
+  {
+    name: "Next.js",
+    logo: "https://cdn.simpleicons.org/nextdotjs/000000",
+    color: "from-black to-gray-600"
   },
-  { 
-    name: "TypeScript", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", 
-    color: "from-blue-600 to-blue-400" 
+  {
+    name: "TypeScript",
+    logo: "https://cdn.simpleicons.org/typescript/3178C6",
+    color: "from-blue-600 to-blue-400"
   },
-  { 
-    name: "Node.js", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", 
-    color: "from-green-600 to-green-400" 
+  {
+    name: "Node.js",
+    logo: "https://cdn.simpleicons.org/nodedotjs/339933",
+    color: "from-green-600 to-green-400"
   },
-  { 
-    name: "JavaScript", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", 
-    color: "from-yellow-500 to-yellow-300" 
+  {
+    name: "JavaScript",
+    logo: "https://cdn.simpleicons.org/javascript/F7DF1E",
+    color: "from-yellow-500 to-yellow-300"
   },
-  { 
-    name: "Docker", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", 
-    color: "from-blue-500 to-blue-300" 
+  {
+    name: "Docker",
+    logo: "https://cdn.simpleicons.org/docker/2496ED",
+    color: "from-blue-500 to-blue-300"
   },
-  { 
-    name: "AWS", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", 
-    color: "from-orange-500 to-orange-300" 
+  {
+    name: "AWS",
+    logo: "https://cdn.simpleicons.org/amazonaws/FF9900",
+    color: "from-orange-500 to-orange-300"
   },
-  { 
-    name: "MongoDB", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", 
-    color: "from-green-500 to-green-300" 
+  {
+    name: "MongoDB",
+    logo: "https://cdn.simpleicons.org/mongodb/47A248",
+    color: "from-green-500 to-green-300"
   },
-  { 
-    name: "PostgreSQL", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", 
-    color: "from-blue-600 to-blue-500" 
+  {
+    name: "PostgreSQL",
+    logo: "https://cdn.simpleicons.org/postgresql/4169E1",
+    color: "from-blue-600 to-blue-500"
   },
-  { 
-    name: "Git", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", 
-    color: "from-red-500 to-orange-500" 
+  {
+    name: "Git",
+    logo: "https://cdn.simpleicons.org/git/F05032",
+    color: "from-red-500 to-orange-500"
   },
-  { 
-    name: "Tailwind CSS", 
-    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg", 
-    color: "from-cyan-500 to-blue-500" 
+  {
+    name: "Tailwind CSS",
+    logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+    color: "from-cyan-500 to-blue-500"
   },
 ]
 
