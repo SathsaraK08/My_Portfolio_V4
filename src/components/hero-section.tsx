@@ -1,161 +1,171 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Download, Mail, MapPin, Sparkles } from 'lucide-react'
-import { ModernButton } from './modern-button'
-import { SlideInLeft, SlideInRight, FloatingAnimation } from './animations'
+import { ArrowRight, Download, Mail, MapPin, Github, Linkedin, ExternalLink } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { useProfile } from '@/hooks/use-profile'
+import Image from 'next/image'
 
 export function HeroSection() {
   const { profile, isLoading } = useProfile()
 
-  // Show loading state or fallback to actual user data
+  // Professional fallback data
   const displayName = profile?.fullName || 'Sathsara Karunarathne'
-  const displayTitle = profile?.title || 'Ai / ML Engineer'
-  const displayBio = profile?.bio || 'Full Stack Developer passionate about creating exceptional digital experiences.'
+  const displayTitle = profile?.title || 'AI / ML Engineer'
+  const displayBio = profile?.bio || 'Passionate AI/ML Engineer building intelligent systems that solve real-world problems. Specialized in deep learning, computer vision, and scalable ML infrastructure.'
   const displayLocation = profile?.location || 'Sri Lanka'
   const displayAvatar = profile?.avatar || 'https://cowyzhxivrfixizgdugw.supabase.co/storage/v1/object/public/media/uploads/06729a38-2f99-47d1-9b0d-ec51743fc187-35A4424.JPG.JPG'
 
-  // Get initials for avatar fallback
-  const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase()
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
-      <div className="container relative z-10 px-4 mx-auto max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left side - Text content */}
-          <SlideInLeft className="space-y-8">
-            <div className="space-y-6">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full border border-purple-200"
+      <div className="container max-w-6xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+          {/* Left Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-8"
+          >
+            {/* Status Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <Badge variant="secondary" className="bg-green-50 text-green-700 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800">
+                <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse" />
+                Available for new opportunities
+              </Badge>
+            </motion.div>
+
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight"
               >
-                <Sparkles className="w-4 h-4 text-purple-500 mr-2" />
-                <span className="text-sm font-medium text-purple-700">Available for hire</span>
-              </motion.div>
-              
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                <span className="block text-gray-800 dark:text-white">Hi, I'm</span>
-                <span className="block bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
-                  {displayName}
+                <span className="text-slate-900 dark:text-slate-100">
+                  Hi, I'm{' '}
                 </span>
-              </h1>
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                  {displayName.split(' ')[0]}
+                </span>
+              </motion.h1>
 
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
-                {displayBio}
-              </p>
-
-              <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-400">
-                <MapPin className="w-4 h-4" />
-                <span>{displayLocation}</span>
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span>Available for work</span>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <ModernButton variant="gradient" size="lg" href="/projects">
-                View My Work <ArrowRight className="w-5 h-5" />
-              </ModernButton>
-              <ModernButton variant="glass" size="lg" href="/contact">
-                <Mail className="w-5 h-5" /> Get In Touch
-              </ModernButton>
-            </div>
-          </SlideInLeft>
-          
-          {/* Right side - Modern hero image */}
-          <SlideInRight className="relative">
-            <FloatingAnimation>
-              <div className="relative">
-                {/* Animated background elements */}
-                <div className="absolute inset-0 animate-pulse">
-                  <div className="absolute top-4 left-4 w-20 h-20 bg-gradient-to-br from-purple-400/30 to-pink-400/30 rounded-full animate-blob"></div>
-                  <div className="absolute bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-blue-400/30 to-cyan-400/30 rounded-full animate-blob animation-delay-2000"></div>
-                  <div className="absolute top-1/2 right-4 w-12 h-12 bg-gradient-to-br from-green-400/30 to-emerald-400/30 rounded-full animate-blob animation-delay-4000"></div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="space-y-2"
+              >
+                <p className="text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-300">
+                  {displayTitle}
+                </p>
+                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                  <MapPin className="w-4 h-4" />
+                  <span>{displayLocation}</span>
                 </div>
-                
-                {/* Modern geometric frame */}
-                <div className="relative p-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-3xl">
-                  <div className="bg-white dark:bg-gray-900 p-3 rounded-3xl">
-                    <div className="relative aspect-square bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 rounded-2xl overflow-hidden">
-                      {/* Glass morphism overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent backdrop-blur-sm"></div>
-                      
-                      {/* Content */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center space-y-4">
-                          <div className="w-32 h-32 mx-auto relative">
-                            {/* Clean professional border */}
-                            <div className="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl relative">
-                              <img
-                                src={displayAvatar}
-                                alt={displayName}
-                                className="w-full h-full object-cover object-center"
-                                style={{
-                                  objectFit: 'cover',
-                                  objectPosition: 'center center'
-                                }}
-                                onError={(e) => {
-                                  console.log('Image failed to load:', displayAvatar)
-                                  const target = e.target as HTMLImageElement
-                                  target.style.display = 'none'
-                                  target.nextElementSibling?.classList.remove('hidden')
-                                }}
-                              />
-                              {/* Fallback with initials */}
-                              <div className="hidden absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                                <span className="text-2xl font-bold text-white">{initials}</span>
-                              </div>
-                            </div>
+              </motion.div>
+            </div>
 
-                            {/* Simple status indicator */}
-                            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-3 border-white dark:border-gray-800 rounded-full"></div>
-                          </div>
-                          <div className="space-y-1">
-                            <p className="text-lg font-semibold text-gray-800 dark:text-white">{displayName}</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">{displayTitle}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Floating elements */}
-                      <div className="absolute top-4 right-4 w-3 h-3 bg-yellow-400 rounded-full animate-ping"></div>
-                      <div className="absolute bottom-6 left-6 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      
-                      {/* Tech icons floating around */}
-                      <div className="absolute top-8 left-8 text-2xl animate-bounce">⚛️</div>
-                      <div className="absolute bottom-8 right-8 text-xl animate-pulse">🐍</div>
-                      <div className="absolute top-1/3 left-4 text-lg animate-ping">⚡</div>
-                    </div>
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl"
+            >
+              {displayBio}
+            </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                <ExternalLink className="w-4 h-4 mr-2" />
+                View Projects
+              </Button>
+              <Button size="lg" variant="outline">
+                <Download className="w-4 h-4 mr-2" />
+                Download Resume
+              </Button>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex gap-4 pt-4"
+            >
+              <Button size="icon" variant="ghost" className="rounded-full">
+                <Github className="w-5 h-5" />
+              </Button>
+              <Button size="icon" variant="ghost" className="rounded-full">
+                <Linkedin className="w-5 h-5" />
+              </Button>
+              <Button size="icon" variant="ghost" className="rounded-full">
+                <Mail className="w-5 h-5" />
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side - Professional Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="relative flex justify-center lg:justify-end"
+          >
+            <div className="relative">
+              {/* Main Image Container - Professional and Clean */}
+              <div className="relative w-80 h-80 lg:w-96 lg:h-96">
+                {/* Subtle background glow */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-600/10 rounded-full blur-2xl" />
+
+                {/* Professional frame */}
+                <div className="relative bg-white dark:bg-slate-800 rounded-full p-3 shadow-2xl border border-slate-200/50 dark:border-slate-700/50">
+                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                    <Image
+                      src={displayAvatar}
+                      alt={displayName}
+                      fill
+                      className="object-cover object-center"
+                      sizes="(max-width: 768px) 320px, 384px"
+                      priority
+                    />
+                    {/* Professional overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
                   </div>
                 </div>
-                
-                {/* Floating status badges */}
-                <motion.div
-                  className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-                  animate={{ y: [-5, 5, -5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Available
-                </motion.div>
-                
-                <motion.div
-                  className="absolute -bottom-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
-                  animate={{ y: [5, -5, 5] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
-                >
-                  5+ Years
-                </motion.div>
               </div>
-            </FloatingAnimation>
-          </SlideInRight>
+
+              {/* Static Professional Elements */}
+              <div className="absolute -top-3 -right-3 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div className="text-lg">🤖</div>
+              </div>
+
+              <div className="absolute -bottom-3 -left-3 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div className="text-lg">⚡</div>
+              </div>
+
+              <div className="absolute top-1/2 -left-6 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-lg border border-slate-200 dark:border-slate-700">
+                <div className="text-lg">🎯</div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
