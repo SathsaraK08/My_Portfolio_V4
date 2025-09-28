@@ -184,7 +184,7 @@ export default function Home() {
       </div>
 
       {/* Featured Projects */}
-      <section className="container mx-auto px-4 py-16 md:py-24 space-y-12">
+      <section id="projects" className="container mx-auto px-4 py-16 md:py-24 space-y-12">
         <ScrollReveal className="text-center space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Featured Projects
@@ -223,14 +223,18 @@ export default function Home() {
 
           <FadeIn delay={0.3} className="flex flex-col sm:flex-row gap-4 justify-center">
             <HoverScale>
-              <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                Start a Conversation
-              </button>
+              <Button asChild size="lg" className="bg-white text-blue-600 hover:bg-gray-50 font-semibold shadow-lg hover:shadow-xl">
+                <Link href="/contact">
+                  Start a Conversation
+                </Link>
+              </Button>
             </HoverScale>
             <HoverScale>
-              <button className="bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                Learn More About Me
-              </button>
+              <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-md border-white/20 hover:bg-white/20 text-white font-semibold">
+                <Link href="/about">
+                  Learn More About Me
+                </Link>
+              </Button>
             </HoverScale>
           </FadeIn>
         </div>

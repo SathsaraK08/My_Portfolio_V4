@@ -6,16 +6,41 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useProfile } from '@/hooks/use-profile'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 
 export function HeroSection() {
   const { profile, isLoading } = useProfile()
+  const [imageError, setImageError] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   // Professional fallback data
   const displayName = profile?.fullName || 'Sathsara Karunarathne'
   const displayTitle = profile?.title || 'AI / ML Engineer'
   const displayBio = profile?.bio || 'Passionate AI/ML Engineer building intelligent systems that solve real-world problems. Specialized in deep learning, computer vision, and scalable ML infrastructure.'
   const displayLocation = profile?.location || 'Sri Lanka'
-  const displayAvatar = profile?.avatar || 'https://cowyzhxivrfixizgdugw.supabase.co/storage/v1/object/public/media/uploads/06729a38-2f99-47d1-9b0d-ec51743fc187-35A4424.JPG.JPG'
+
+  // Smart image fallback system
+  const getDisplayAvatar = () => {
+    if (imageError || !profile?.avatar) {
+      // Fallback to generated avatar with user's name
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&size=400&background=6366f1&color=ffffff&bold=true&font-size=0.6`
+    }
+    return profile.avatar
+  }
+
+  const displayAvatar = getDisplayAvatar()
+
+  // Timeout fallback for slow loading images
+  useEffect(() => {
+    if (profile?.avatar && !imageLoaded && !imageError) {
+      const timeout = setTimeout(() => {
+        setImageError(true)
+      }, 5000) // 5 second timeout
+
+      return () => clearTimeout(timeout)
+    }
+  }, [profile?.avatar, imageLoaded, imageError])
+
 
   return (
     <section className="relative min-h-screen flex items-center justify-center py-16 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
@@ -93,13 +118,17 @@ export function HeroSection() {
               transition={{ delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                <ExternalLink className="w-4 h-4 mr-2" />
-                View Projects
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" asChild>
+                <a href="#projects">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  View Projects
+                </a>
               </Button>
-              <Button size="lg" variant="outline">
-                <Download className="w-4 h-4 mr-2" />
-                Download Resume
+              <Button size="lg" variant="outline" asChild>
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download Resume
+                </a>
               </Button>
             </motion.div>
 
@@ -110,15 +139,27 @@ export function HeroSection() {
               transition={{ delay: 0.7 }}
               className="flex gap-4 pt-4"
             >
-              <Button size="icon" variant="ghost" className="rounded-full">
-                <Github className="w-5 h-5" />
-              </Button>
-              <Button size="icon" variant="ghost" className="rounded-full">
-                <Linkedin className="w-5 h-5" />
-              </Button>
-              <Button size="icon" variant="ghost" className="rounded-full">
-                <Mail className="w-5 h-5" />
-              </Button>
+              {(profile?.github || 'https://github.com') && (
+                <Button size="icon" variant="ghost" className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" asChild>
+                  <a href={profile?.github || 'https://github.com'} target="_blank" rel="noopener noreferrer">
+                    <Github className="w-5 h-5" />
+                  </a>
+                </Button>
+              )}
+              {(profile?.linkedIn || 'https://linkedin.com/in/sathsara') && (
+                <Button size="icon" variant="ghost" className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" asChild>
+                  <a href={profile?.linkedIn || 'https://linkedin.com/in/sathsara'} target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                </Button>
+              )}
+              {(profile?.email || 'sathsara@example.com') && (
+                <Button size="icon" variant="ghost" className="rounded-full hover:bg-slate-100 dark:hover:bg-slate-800" asChild>
+                  <a href={`mailto:${profile?.email || 'sathsara@example.com'}`}>
+                    <Mail className="w-5 h-5" />
+                  </a>
+                </Button>
+              )}
             </motion.div>
           </motion.div>
 
@@ -137,14 +178,19 @@ export function HeroSection() {
 
                 {/* Professional frame */}
                 <div className="relative bg-white dark:bg-slate-800 rounded-full p-3 shadow-2xl border border-slate-200/50 dark:border-slate-700/50">
-                  <div className="relative w-full h-full rounded-full overflow-hidden">
-                    <Image
+                  <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
+                    <img
                       src={displayAvatar}
                       alt={displayName}
-                      fill
-                      className="object-cover object-center"
-                      sizes="(max-width: 768px) 320px, 384px"
-                      priority
+                      className="w-full h-full object-cover object-center"
+                      onError={() => {
+                        setImageError(true)
+                        setImageLoaded(false)
+                      }}
+                      onLoad={() => {
+                        setImageError(false)
+                        setImageLoaded(true)
+                      }}
                     />
                     {/* Professional overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />

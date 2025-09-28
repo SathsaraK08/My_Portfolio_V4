@@ -13,6 +13,13 @@ export const prisma =
         url: process.env.DATABASE_URL,
       },
     },
+    // Optimize connection settings
+    __internal: {
+      engine: {
+        connectionTimeout: 10000,
+        queryTimeout: 30000,
+      },
+    },
   })
 
 if (process.env.NODE_ENV !== 'production') {
