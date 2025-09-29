@@ -27,24 +27,27 @@ const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 profileCache = null
 lastFetch = 0
 
+// Default fallback profile to prevent hydration mismatch - MUST MATCH DATABASE EXACTLY
+const defaultProfile: Profile = {
+  fullName: 'Sathsara Karunarathne',
+  title: 'Ai / ML Engineer',
+  bio: 'Bla nnkscfksvcsc',
+  avatar: 'https://cowyzhxivrfixizgdugw.supabase.co/storage/v1/object/public/media/uploads/06729a38-2f99-47d1-9b0d-ec51743fc187-35A4424.JPG.JPG',
+  location: 'Sri Lanka',
+  email: 'john.doe@example.com',
+  phone: '+1 (555) 123-4567',
+  website: 'https://johndoe.dev',
+  linkedIn: 'https://linkedin.com/in/johndoe',
+  github: 'https://github.com/johndoe',
+  twitter: 'https://twitter.com/johndoe',
+  instagram: '',
+  youTube: ''
+}
+
 export function useProfile() {
-  // Start with the correct data immediately to avoid showing John Doe
-  const [profile, setProfile] = useState<Profile | null>({
-    fullName: 'Sathsara Karunarathne',
-    title: 'AI / ML Engineer',
-    bio: 'Passionate AI/ML Engineer building intelligent systems that solve real-world problems. Specialized in deep learning, computer vision, and scalable ML infrastructure.',
-    avatar: 'https://cowyzhxivrfixizgdugw.supabase.co/storage/v1/object/public/media/uploads/06729a38-2f99-47d1-9b0d-ec51743fc187-35A4424.JPG.JPG',
-    location: 'Sri Lanka',
-    email: 'sathsara@example.com',
-    phone: '+94 123 456 789',
-    website: 'https://sathsara.dev',
-    linkedIn: 'https://linkedin.com/in/sathsara',
-    github: 'https://github.com/sathsara',
-    twitter: 'https://twitter.com/sathsara',
-    instagram: null,
-    youTube: null
-  })
-  const [isLoading, setIsLoading] = useState(false)
+  // Start with default profile to prevent hydration mismatch
+  const [profile, setProfile] = useState<Profile | null>(defaultProfile)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const fetchProfile = useCallback(async (forceRefresh = false) => {

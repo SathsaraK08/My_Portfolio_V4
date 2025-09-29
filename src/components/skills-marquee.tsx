@@ -40,9 +40,9 @@ const skills = [
     color: "from-blue-500 to-blue-300"
   },
   {
-    name: "AWS",
-    logo: "https://cdn.simpleicons.org/amazonaws/FF9900",
-    color: "from-orange-500 to-orange-300"
+    name: "Redis",
+    logo: "https://cdn.simpleicons.org/redis/DC382D",
+    color: "from-red-500 to-red-300"
   },
   {
     name: "MongoDB",

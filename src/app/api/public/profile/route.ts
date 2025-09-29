@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     })
 
     if (!profile) {
-      // Return default profile if none exists
+      // Return default profile if none exists - MUST MATCH useProfile hook exactly
       return NextResponse.json({
         fullName: 'Sathsara Karunarathne',
         title: 'AI / ML Engineer',
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Failed to fetch public profile:', error)
 
-    // Return default profile on error
+    // Return default profile on error - MUST MATCH useProfile hook exactly
     return NextResponse.json({
       fullName: 'Sathsara Karunarathne',
       title: 'AI / ML Engineer',

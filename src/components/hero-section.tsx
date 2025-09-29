@@ -13,11 +13,13 @@ export function HeroSection() {
   const [imageError, setImageError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  // Professional fallback data
+  // Professional fallback data - only use when profile is loaded and not available
   const displayName = profile?.fullName || 'Sathsara Karunarathne'
   const displayTitle = profile?.title || 'AI / ML Engineer'
   const displayBio = profile?.bio || 'Passionate AI/ML Engineer building intelligent systems that solve real-world problems. Specialized in deep learning, computer vision, and scalable ML infrastructure.'
   const displayLocation = profile?.location || 'Sri Lanka'
+
+  // Always render with fallback data, smooth transitions when data loads
 
   // Smart image fallback system
   const getDisplayAvatar = () => {
