@@ -163,7 +163,7 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Professional Image */}
+          {/* Right Side - Modern Professional Avatar */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -171,18 +171,31 @@ export function HeroSection() {
             className="relative flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Main Image Container - Professional and Clean */}
-              <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                {/* Subtle background glow */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-600/10 rounded-2xl blur-2xl" />
+              {/* Modern Background Effects */}
+              <div className="absolute -inset-8">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-2xl opacity-60 animate-pulse" />
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full blur-3xl opacity-40 animate-pulse delay-1000" />
+              </div>
 
-                {/* Professional frame - Square with rounded corners */}
-                <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-2xl border border-slate-200/50 dark:border-slate-700/50 h-full">
-                  <div className="relative w-full h-full rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+              {/* Main Avatar Container */}
+              <motion.div
+                whileHover={{ y: -10, rotateY: 5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="relative w-80 h-80 lg:w-96 lg:h-96"
+              >
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-1 animate-spin-slow">
+                  <div className="w-full h-full rounded-full bg-white dark:bg-slate-900" />
+                </div>
+
+                {/* Middle Ring */}
+                <div className="absolute inset-2 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 p-3 shadow-2xl">
+                  {/* Inner Avatar Circle */}
+                  <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 shadow-inner">
                     <img
                       src={displayAvatar}
                       alt={displayName}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-cover object-center scale-105 hover:scale-110 transition-transform duration-500"
                       onError={() => {
                         setImageError(true)
                         setImageLoaded(false)
@@ -192,11 +205,38 @@ export function HeroSection() {
                         setImageLoaded(true)
                       }}
                     />
-                    {/* Professional overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+
+                    {/* Elegant Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/5" />
+
+                    {/* Status Indicator */}
+                    <div className="absolute top-6 right-6 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white shadow-lg animate-pulse" />
                   </div>
                 </div>
-              </div>
+
+                {/* Floating Elements */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0"
+                >
+                  <div className="absolute top-8 right-2 w-3 h-3 bg-blue-400 rounded-full opacity-60" />
+                  <div className="absolute bottom-12 left-4 w-2 h-2 bg-purple-400 rounded-full opacity-60" />
+                  <div className="absolute top-1/2 left-2 w-2.5 h-2.5 bg-pink-400 rounded-full opacity-60" />
+                </motion.div>
+
+                {/* Modern Badge */}
+                <motion.div
+                  initial={{ scale: 0, rotate: -10 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
+                  className="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2 shadow-xl"
+                >
+                  <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    AI/ML Expert
+                  </span>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
