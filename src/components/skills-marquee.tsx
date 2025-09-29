@@ -156,12 +156,8 @@ export function SkillsMarquee() {
             </div>
           </div>
         ) : (
-          // Clean skills marquee - just icons with CSS animation
+          // Clean skills marquee - just pure logos with colors
           <div className="w-full overflow-hidden relative">
-            {/* Gradient fade edges for seamless look */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 dark:to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 dark:to-transparent z-10 pointer-events-none" />
-
             <div className="marquee-container">
               <div className="marquee-content">
                 {/* Duplicate skills for seamless loop */}
@@ -172,17 +168,15 @@ export function SkillsMarquee() {
                     title={skill.name}
                   >
                     {skill.imageUrl || skill.icon ? (
-                      <div className="relative p-2 rounded-xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-white/20 dark:border-slate-700/20 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:scale-110 hover:shadow-lg">
-                        <Image
-                          src={skill.imageUrl || skill.icon || ''}
-                          alt={`${skill.name} logo`}
-                          width={48}
-                          height={48}
-                          className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-all duration-300 filter grayscale hover:grayscale-0"
-                        />
-                      </div>
+                      <Image
+                        src={skill.imageUrl || skill.icon || ''}
+                        alt={`${skill.name} logo`}
+                        width={56}
+                        height={56}
+                        className="w-14 h-14 object-contain transition-all duration-300 hover:scale-110"
+                      />
                     ) : (
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg opacity-70 hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-xl">
+                      <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg transition-all duration-300 hover:scale-110">
                         {skill.name.charAt(0).toUpperCase()}
                       </div>
                     )}
