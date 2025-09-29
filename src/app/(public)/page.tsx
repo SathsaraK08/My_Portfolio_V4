@@ -29,24 +29,9 @@ export default function Home() {
       </div>
 
       {/* Skills Marquee Section */}
-      <section className="py-16 relative">
-        <div className="container mx-auto px-4 mb-8">
-          <ScrollReveal>
-            <div className="text-center space-y-4">
-              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Technologies & Skills
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Expertise in modern technologies and frameworks
-              </p>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
-            </div>
-          </ScrollReveal>
-        </div>
-        <ScrollReveal>
-          <SkillsMarquee />
-        </ScrollReveal>
-      </section>
+      <ScrollReveal>
+        <SkillsMarquee />
+      </ScrollReveal>
 
       {/* Section Divider */}
       <div className="relative py-4">

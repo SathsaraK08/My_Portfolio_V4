@@ -2,150 +2,198 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
-const skills = [
-  {
-    name: "Python",
-    logo: "https://cdn.simpleicons.org/python/3776AB",
-    color: "from-blue-500 to-yellow-500"
-  },
-  {
-    name: "React",
-    logo: "https://cdn.simpleicons.org/react/61DAFB",
-    color: "from-blue-400 to-cyan-400"
-  },
-  {
-    name: "Next.js",
-    logo: "https://cdn.simpleicons.org/nextdotjs/000000",
-    color: "from-black to-gray-600"
-  },
-  {
-    name: "TypeScript",
-    logo: "https://cdn.simpleicons.org/typescript/3178C6",
-    color: "from-blue-600 to-blue-400"
-  },
-  {
-    name: "Node.js",
-    logo: "https://cdn.simpleicons.org/nodedotjs/339933",
-    color: "from-green-600 to-green-400"
-  },
-  {
-    name: "JavaScript",
-    logo: "https://cdn.simpleicons.org/javascript/F7DF1E",
-    color: "from-yellow-500 to-yellow-300"
-  },
-  {
-    name: "Docker",
-    logo: "https://cdn.simpleicons.org/docker/2496ED",
-    color: "from-blue-500 to-blue-300"
-  },
-  {
-    name: "Redis",
-    logo: "https://cdn.simpleicons.org/redis/DC382D",
-    color: "from-red-500 to-red-300"
-  },
-  {
-    name: "MongoDB",
-    logo: "https://cdn.simpleicons.org/mongodb/47A248",
-    color: "from-green-500 to-green-300"
-  },
-  {
-    name: "PostgreSQL",
-    logo: "https://cdn.simpleicons.org/postgresql/4169E1",
-    color: "from-blue-600 to-blue-500"
-  },
-  {
-    name: "Git",
-    logo: "https://cdn.simpleicons.org/git/F05032",
-    color: "from-red-500 to-orange-500"
-  },
-  {
-    name: "Tailwind CSS",
-    logo: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
-    color: "from-cyan-500 to-blue-500"
-  },
-]
+interface Skill {
+  id: string
+  name: string
+  category: string | null
+  level: number
+  icon?: string | null
+  imageUrl?: string | null
+  order: number
+  isVisible: boolean
+}
 
-// Create multiple copies for seamless scrolling
-const duplicatedSkills = [...skills, ...skills, ...skills]
+interface SkillsSection {
+  title: string
+  subtitle: string
+  skills: Skill[]
+}
 
 export function SkillsMarquee() {
+  const [skillsData, setSkillsData] = useState<SkillsSection>({
+    title: "Technologies & Skills",
+    subtitle: "Expertise in modern technologies and frameworks",
+    skills: []
+  })
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchSkills() {
+      try {
+        const response = await fetch('/api/public/home-skills')
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch skills: ${response.status}`)
+        }
+
+        const data = await response.json()
+        setSkillsData(data)
+        setError(null)
+      } catch (err) {
+        console.error('Failed to fetch skills:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load skills')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSkills()
+  }, [])
+
+  const hasSkills = skillsData.skills.length > 0
+
+  console.log('SkillsMarquee render:', { loading, error, hasSkills, skillsCount: skillsData.skills.length })
+
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12">
-      <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-gray-900 dark:via-transparent dark:to-gray-900 z-10"></div>
-      
-      <motion.div
-        className="flex gap-8 items-center whitespace-nowrap"
-        initial={{ x: 0 }}
-        animate={{ x: "-100%" }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "linear",
-          repeatType: "loop"
-        }}
-        style={{
-          width: "200%"
-        }}
-      >
-        {/* First set */}
-        <div className="flex gap-8 items-center flex-shrink-0">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={`first-${skill.name}-${index}`}
-              className="flex-shrink-0 group cursor-pointer"
-              whileHover={{ scale: 1.1, y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className={`bg-gradient-to-br ${skill.color} p-6 rounded-2xl shadow-lg min-w-[140px] text-center backdrop-blur-sm border border-white/20 hover:shadow-2xl transition-all duration-300`}>
-                <div className="mb-3 flex justify-center">
-                  <div className="w-12 h-12 bg-white/90 rounded-xl flex items-center justify-center p-2">
-                    <Image
-                      src={skill.logo}
-                      alt={`${skill.name} logo`}
-                      width={32}
-                      height={32}
-                      className="w-8 h-8 object-contain"
-                    />
+    <>
+      <style jsx>{`
+        .marquee-container {
+          display: flex;
+          align-items: center;
+          height: 100px;
+          width: 100%;
+          position: relative;
+        }
+
+        .marquee-content {
+          display: flex;
+          align-items: center;
+          animation: scroll 20s linear infinite;
+          white-space: nowrap;
+        }
+
+        @keyframes scroll {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+
+        .marquee-container:hover .marquee-content {
+          animation-play-state: paused;
+        }
+      `}</style>
+      <section className="relative overflow-hidden py-16 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+      {/* Background decorations */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
+      </div>
+
+      {/* Header */}
+      <div className="container mx-auto px-4 text-center mb-12 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-4"
+        >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+            {skillsData.title}
+          </h2>
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto font-light">
+            {skillsData.subtitle}
+          </p>
+        </motion.div>
+      </div>
+
+      {/* Skills Marquee */}
+      <div className="relative min-h-[120px] flex items-center">
+
+        {loading ? (
+          // Loading state
+          <div className="container mx-auto px-4 text-center">
+            <div className="flex items-center justify-center gap-2">
+              <motion.div
+                className="w-3 h-3 bg-blue-500 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+              />
+              <motion.div
+                className="w-3 h-3 bg-purple-500 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+              />
+              <motion.div
+                className="w-3 h-3 bg-blue-600 rounded-full"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+              />
+            </div>
+          </div>
+        ) : error ? (
+          // Error state
+          <div className="container mx-auto px-4 text-center">
+            <div className="p-4 bg-red-50 dark:bg-red-950/30 rounded-lg max-w-md mx-auto">
+              <p className="text-red-600 dark:text-red-400 text-sm">
+                Unable to load skills: {error}
+              </p>
+            </div>
+          </div>
+        ) : !hasSkills ? (
+          // No skills state
+          <div className="container mx-auto px-4 text-center">
+            <div className="p-8 bg-yellow-100 dark:bg-yellow-800/50 rounded-2xl max-w-md mx-auto">
+              <p className="text-yellow-800 dark:text-yellow-200">
+                No skills found (skillsData.skills.length = {skillsData.skills.length})
+              </p>
+            </div>
+          </div>
+        ) : (
+          // Clean skills marquee - just icons with CSS animation
+          <div className="w-full overflow-hidden relative">
+            {/* Gradient fade edges for seamless look */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 dark:to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 dark:to-transparent z-10 pointer-events-none" />
+
+            <div className="marquee-container">
+              <div className="marquee-content">
+                {/* Duplicate skills for seamless loop */}
+                {[...skillsData.skills, ...skillsData.skills, ...skillsData.skills].map((skill, index) => (
+                  <div
+                    key={`skill-${index}`}
+                    className="flex-shrink-0 group cursor-pointer inline-block mx-8"
+                    title={skill.name}
+                  >
+                    {skill.imageUrl || skill.icon ? (
+                      <div className="relative p-2 rounded-xl bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-white/20 dark:border-slate-700/20 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover:scale-110 hover:shadow-lg">
+                        <Image
+                          src={skill.imageUrl || skill.icon || ''}
+                          alt={`${skill.name} logo`}
+                          width={48}
+                          height={48}
+                          className="w-12 h-12 object-contain opacity-70 hover:opacity-100 transition-all duration-300 filter grayscale hover:grayscale-0"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg opacity-70 hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-110 hover:shadow-xl">
+                        {skill.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="text-white font-semibold text-sm drop-shadow-sm">
-                  {skill.name}
-                </div>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-        
-        {/* Second set for seamless loop */}
-        <div className="flex gap-8 items-center flex-shrink-0">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={`second-${skill.name}-${index}`}
-              className="flex-shrink-0 group cursor-pointer"
-              whileHover={{ scale: 1.1, y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className={`bg-gradient-to-br ${skill.color} p-6 rounded-2xl shadow-lg min-w-[140px] text-center backdrop-blur-sm border border-white/20 hover:shadow-2xl transition-all duration-300`}>
-                <div className="mb-3 flex justify-center">
-                  <div className="w-12 h-12 bg-white/90 rounded-xl flex items-center justify-center p-2">
-                    <Image
-                      src={skill.logo}
-                      alt={`${skill.name} logo`}
-                      width={32}
-                      height={32}
-                      className="w-8 h-8 object-contain"
-                    />
-                  </div>
-                </div>
-                <div className="text-white font-semibold text-sm drop-shadow-sm">
-                  {skill.name}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-    </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+    </>
   )
 }
