@@ -9,6 +9,7 @@ import { ModernCard } from "@/components/modern-card"
 import { SkillsMarquee } from "@/components/skills-marquee"
 import { ScrollReveal, ParallaxScroll, HoverGlow } from "@/components/scroll-effects"
 import { ProjectsGrid } from "@/components/projects-grid"
+import { ServicesSection } from "@/components/services-section"
 
 export default function Home() {
   return (
@@ -45,116 +46,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Skills Overview */}
-      <section className="bg-muted/50 py-16 md:py-24 relative overflow-hidden">
-        {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-24 h-24 bg-blue-500 rounded-full animate-bounce"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-pink-500 rounded-full animate-spin"></div>
-        </div>
-
-        <div className="container mx-auto px-4 space-y-12 relative z-10">
-          <ScrollReveal className="text-center space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              What I Do
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              I specialize in building modern web applications using cutting-edge technologies
-            </p>
-          </ScrollReveal>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <ScrollReveal direction="up" delay={0.1}>
-              <HoverGlow glowColor="rgb(59, 130, 246)">
-                <ModernCard variant="gradient" hover="lift">
-                  <Card className="text-center h-full border-0 bg-transparent shadow-none">
-                    <CardHeader>
-                      <FloatingAnimation>
-                        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          <Globe className="h-8 w-8 text-white" />
-                        </div>
-                      </FloatingAnimation>
-                      <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Frontend</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        React, Next.js, TypeScript, Tailwind CSS
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </ModernCard>
-              </HoverGlow>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.2}>
-              <HoverGlow glowColor="rgb(59, 130, 246)">
-                <ModernCard variant="gradient" hover="lift">
-                  <Card className="text-center h-full border-0 bg-transparent shadow-none">
-                    <CardHeader>
-                      <FloatingAnimation>
-                        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          <Database className="h-8 w-8 text-white" />
-                        </div>
-                      </FloatingAnimation>
-                      <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Backend</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        Node.js, Python, PostgreSQL, MongoDB
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </ModernCard>
-              </HoverGlow>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.3}>
-              <HoverGlow glowColor="rgb(59, 130, 246)">
-                <ModernCard variant="gradient" hover="lift">
-                  <Card className="text-center h-full border-0 bg-transparent shadow-none">
-                    <CardHeader>
-                      <FloatingAnimation>
-                        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          <Smartphone className="h-8 w-8 text-white" />
-                        </div>
-                      </FloatingAnimation>
-                      <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Mobile</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        React Native, Flutter, Progressive Web Apps
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </ModernCard>
-              </HoverGlow>
-            </ScrollReveal>
-
-            <ScrollReveal direction="up" delay={0.4}>
-              <HoverGlow glowColor="rgb(59, 130, 246)">
-                <ModernCard variant="gradient" hover="lift">
-                  <Card className="text-center h-full border-0 bg-transparent shadow-none">
-                    <CardHeader>
-                      <FloatingAnimation>
-                        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          <Code className="h-8 w-8 text-white" />
-                        </div>
-                      </FloatingAnimation>
-                      <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">DevOps</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        Docker, AWS, CI/CD, Git
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                </ModernCard>
-              </HoverGlow>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
+      {/* Dynamic Services Section */}
+      <ServicesSection />
 
       {/* Section Divider */}
       <div className="relative py-4">

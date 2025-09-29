@@ -17,13 +17,15 @@ import {
   Menu,
   X,
   LogOut,
-  User
+  User,
+  Briefcase
 } from "lucide-react"
 
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Profile", href: "/admin/profile", icon: User },
   { name: "Skills", href: "/admin/skills", icon: Users },
+  { name: "Services", href: "/admin/services", icon: Briefcase },
   { name: "Projects", href: "/admin/projects", icon: FolderOpen },
   { name: "Education", href: "/admin/education", icon: GraduationCap },
   { name: "Certificates", href: "/admin/certificates", icon: Award },
