@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 
 interface Skill {
-  id: string
+  id: number
   name: string
   category: string | null
   level: number

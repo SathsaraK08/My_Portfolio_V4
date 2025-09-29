@@ -47,7 +47,7 @@ export function ModernButton({
   asChild,
   ...props 
 }: ModernButtonProps) {
-  const Component = motion(href ? 'a' : 'button')
+  const Component = href ? motion.a : motion.button
   
   return (
     <Component
