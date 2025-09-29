@@ -170,20 +170,20 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex justify-center lg:justify-start -mt-16 lg:-mt-20"
           >
             <div className="relative">
-              {/* Modern Background Effects */}
-              <div className="absolute -inset-8">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-2xl opacity-60 animate-pulse" />
-                <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full blur-3xl opacity-40 animate-pulse delay-1000" />
+              {/* Modern Background Effects - Adjusted for larger avatar */}
+              <div className="absolute -inset-12">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-60 animate-pulse" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-purple-100 to-pink-100 rounded-full blur-3xl opacity-40 animate-pulse delay-1000" />
               </div>
 
-              {/* Main Avatar Container */}
+              {/* Main Avatar Container - Larger Size */}
               <motion.div
                 whileHover={{ y: -10, rotateY: 5 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="relative w-80 h-80 lg:w-96 lg:h-96"
+                className="relative w-96 h-96 lg:w-[28rem] lg:h-[28rem]"
               >
                 {/* Outer Ring */}
                 <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 p-1 animate-spin-slow">
@@ -216,25 +216,25 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                {/* Floating Elements */}
+                {/* Floating Elements - Adjusted for larger size */}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   className="absolute inset-0"
                 >
-                  <div className="absolute top-8 right-2 w-3 h-3 bg-blue-400 rounded-full opacity-60" />
-                  <div className="absolute bottom-12 left-4 w-2 h-2 bg-purple-400 rounded-full opacity-60" />
-                  <div className="absolute top-1/2 left-2 w-2.5 h-2.5 bg-pink-400 rounded-full opacity-60" />
+                  <div className="absolute top-12 right-6 w-4 h-4 bg-blue-400 rounded-full opacity-60" />
+                  <div className="absolute bottom-16 left-8 w-3 h-3 bg-purple-400 rounded-full opacity-60" />
+                  <div className="absolute top-1/2 left-4 w-3.5 h-3.5 bg-pink-400 rounded-full opacity-60" />
                 </motion.div>
 
-                {/* Modern Badge */}
+                {/* Modern Badge - Adjusted for larger avatar */}
                 <motion.div
                   initial={{ scale: 0, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
-                  className="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-2 shadow-xl"
+                  className="absolute -bottom-8 -right-8 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-3 shadow-xl"
                 >
-                  <span className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <span className="text-base font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     AI/ML Expert
                   </span>
                 </motion.div>
