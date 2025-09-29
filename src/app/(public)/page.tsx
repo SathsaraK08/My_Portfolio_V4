@@ -62,28 +62,37 @@ export default function Home() {
       </div>
 
       {/* Featured Projects */}
-      <section id="projects" className="container mx-auto px-4 py-16 md:py-24 space-y-12">
-        <ScrollReveal className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Featured Projects
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Here are some of my recent projects that showcase my skills and expertise
-          </p>
-        </ScrollReveal>
+      <section id="projects" className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
+        </div>
 
-        <ScrollReveal delay={0.2}>
-          <ProjectsGrid limit={6} showFeatured={true} />
-        </ScrollReveal>
+        <div className="container mx-auto px-4 space-y-8 relative z-10">
+          <ScrollReveal className="text-center space-y-4 mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+              Featured Projects
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Here are some of my recent projects that showcase my skills and expertise
+            </p>
+          </ScrollReveal>
 
-        <ScrollReveal delay={0.5} className="text-center pt-8">
-          <HoverScale>
-            <ModernButton variant="gradient-2" size="lg" href="/projects">
-              View All Projects
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </ModernButton>
-          </HoverScale>
-        </ScrollReveal>
+          <ScrollReveal delay={0.2}>
+            <ProjectsGrid limit={6} showFeatured={true} />
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.5} className="text-center pt-8">
+            <HoverScale>
+              <ModernButton variant="gradient-2" size="lg" href="/projects">
+                View All Projects
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </ModernButton>
+            </HoverScale>
+          </ScrollReveal>
+        </div>
       </section>
 
       {/* CTA Section */}

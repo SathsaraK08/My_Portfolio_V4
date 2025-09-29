@@ -15,11 +15,10 @@ import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, Star, Globe, Database, Smartphone, Code, Monitor, Settings } from 'lucide-react'
+import { ArrowLeft, Star, Globe, Database, Smartphone, Code, Monitor, Settings, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { ScrollReveal, HoverGlow, ParallaxScroll } from '@/components/scroll-effects'
 import { FloatingAnimation, FadeIn, SlideInLeft, SlideInRight } from '@/components/animations'
-import { ComingSoonTemplate } from '@/components/templates/coming-soon-template'
 
 interface Service {
   id: string
@@ -125,9 +124,9 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
       {/* Enhanced Header with Gradient */}
-      <header className="border-b bg-gradient-to-r from-background via-background to-muted/20 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 sticky top-0 z-50">
+      <header className="border-b bg-gradient-to-r from-slate-50/95 via-blue-50/30 to-purple-50/30 dark:from-slate-950/95 dark:via-blue-950/30 dark:to-purple-950/30 backdrop-blur-xl supports-[backdrop-filter]:bg-slate-50/80 dark:supports-[backdrop-filter]:bg-slate-950/80 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-6">
           <FadeIn>
             <div className="flex items-center gap-4">
@@ -150,129 +149,143 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
       </header>
 
       {/* Enhanced Main Content */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12 items-start">
+      <main className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-7xl mx-auto">
+            <div className="max-w-4xl mx-auto space-y-8">
             {/* Service Information - Enhanced */}
-            <div className="lg:col-span-2 space-y-12">
-              <SlideInLeft>
-                <div className="space-y-6">
-                  {/* Hero Section */}
-                  <div className="relative p-8 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 border border-border/50 backdrop-blur-sm">
-                    <div className="flex items-start gap-6">
-                      {/* Enhanced Icon/Image */}
-                      <FloatingAnimation>
-                        <div className="flex-shrink-0">
-                          {service.image && service.image.trim() !== '' ? (
-                            <div className="h-20 w-20 rounded-2xl overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 p-1 shadow-2xl">
-                              <img
-                                src={service.image}
-                                alt={service.title}
-                                className="w-full h-full object-cover object-center rounded-xl bg-white"
-                              />
-                            </div>
-                          ) : (
-                            <div className="h-20 w-20 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-2xl">
-                              {getIconComponent(service.icon, service.category)}
-                            </div>
+            <SlideInLeft>
+              <div className="space-y-6">
+                {/* Hero Section */}
+                <div className="relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 border border-border/50 backdrop-blur-sm">
+                  <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                    {/* Enhanced Icon/Image */}
+                    <FloatingAnimation>
+                      <div className="flex-shrink-0">
+                        {service.image && service.image.trim() !== '' ? (
+                          <div className="h-24 w-24 rounded-2xl overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 p-1 shadow-2xl mx-auto sm:mx-0">
+                            <img
+                              src={service.image}
+                              alt={service.title}
+                              className="w-full h-full object-cover object-center rounded-xl bg-white"
+                            />
+                          </div>
+                        ) : (
+                          <div className="h-24 w-24 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-2xl mx-auto sm:mx-0">
+                            {getIconComponent(service.icon, service.category)}
+                          </div>
+                        )}
+                      </div>
+                    </FloatingAnimation>
+
+                    {/* Title and Meta */}
+                    <div className="flex-1 space-y-4 w-full">
+                      <div className="space-y-3">
+                        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3">
+                          <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+                            {service.title}
+                          </h1>
+                          {service.featured && (
+                            <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg">
+                              <Star className="w-3 h-3 mr-1 fill-current" />
+                              Featured
+                            </Badge>
                           )}
                         </div>
-                      </FloatingAnimation>
 
-                      {/* Title and Meta */}
-                      <div className="flex-1 space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex items-start gap-3 flex-wrap">
-                            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
-                              {service.title}
-                            </h1>
-                            {service.featured && (
-                              <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg">
-                                <Star className="w-3 h-3 mr-1 fill-current" />
-                                Featured
-                              </Badge>
-                            )}
-                          </div>
-
-                          {service.category && (
+                        {service.category && (
+                          <div className="flex justify-center sm:justify-start">
                             <Badge variant="outline" className="bg-background/50 backdrop-blur-sm">
                               {service.category}
                             </Badge>
-                          )}
-                        </div>
-
-                        {service.shortDesc && (
-                          <p className="text-lg text-muted-foreground leading-relaxed">
-                            {service.shortDesc}
-                          </p>
+                          </div>
                         )}
                       </div>
+
+                      {service.shortDesc && (
+                        <p className="text-lg text-muted-foreground leading-relaxed">
+                          {service.shortDesc}
+                        </p>
+                      )}
                     </div>
                   </div>
-
-                  {/* Description Section */}
-                  {service.description && service.description.trim() !== '' && (
-                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                      <CardHeader>
-                        <CardTitle className="text-2xl font-semibold flex items-center gap-2">
-                          <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
-                          About This Service
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-muted-foreground leading-relaxed text-lg">
-                          {service.description}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {/* Technologies Section */}
-                  {service.features.length > 0 && (
-                    <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
-                      <CardHeader>
-                        <CardTitle className="text-2xl font-semibold flex items-center gap-2">
-                          <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-blue-500 rounded-full" />
-                          Technologies & Tools
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                          {service.features.map((feature, index) => (
-                            <Badge
-                              key={index}
-                              variant="secondary"
-                              className="px-4 py-2 text-center justify-center bg-gradient-to-r from-secondary/80 to-secondary hover:from-secondary hover:to-secondary/80 transition-all"
-                            >
-                              {feature}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )}
                 </div>
-              </SlideInLeft>
-            </div>
 
-            {/* Enhanced Coming Soon Section */}
-            <div className="lg:sticky lg:top-24">
-              <SlideInRight>
-                <ComingSoonTemplate
-                  title="Enhanced Features"
-                  description="Advanced service features and booking capabilities are being developed to provide you with the best possible experience."
-                  estimatedLaunch="Q2 2024"
-                />
-              </SlideInRight>
+                {/* Description Section */}
+                {service.description && service.description.trim() !== '' && (
+                  <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-semibold flex items-center gap-2">
+                        <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full" />
+                        About This Service
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground leading-relaxed text-lg">
+                        {service.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Technologies Section */}
+                {service.features.length > 0 && (
+                  <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                    <CardHeader>
+                      <CardTitle className="text-2xl font-semibold flex items-center gap-2">
+                        <div className="w-1 h-6 bg-gradient-to-b from-green-500 to-blue-500 rounded-full" />
+                        Technologies & Tools
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {service.features.map((feature, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="px-4 py-3 text-center justify-center bg-gradient-to-r from-secondary/80 to-secondary hover:from-secondary hover:to-secondary/80 transition-all shadow-sm"
+                          >
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Simple Coming Soon Message */}
+                <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+                  <CardContent className="p-8 text-center">
+                    <div className="space-y-4">
+                      <div className="mx-auto h-16 w-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                        <Settings className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        More Features Coming Soon
+                      </h3>
+                      <p className="text-muted-foreground max-w-lg mx-auto">
+                        Enhanced service features including pricing details, portfolio examples, and booking capabilities will be available in the future.
+                      </p>
+                      <Badge variant="outline" className="bg-background/50">
+                        <Clock className="w-3 h-3 mr-1" />
+                        In Development
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </SlideInLeft>
             </div>
           </div>
         </div>
       </main>
-      {/* Background Decorations */}
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
-      </div>
     </div>
   )
 }

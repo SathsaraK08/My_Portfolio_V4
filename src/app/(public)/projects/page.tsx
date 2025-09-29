@@ -139,46 +139,40 @@ export default function ProjectsPage() {
   const otherProjects = filteredProjects.filter(project => !project.featured)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800" />
-        <div className="absolute inset-0 bg-black/10" />
-        
-        {/* Animated background elements */}
+      <section className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+        {/* Background decorations */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
         </div>
         
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <FadeIn>
-            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-              <Code2 className="h-6 w-6 text-blue-200" />
-              <span className="text-blue-100 font-medium">Portfolio Projects</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+        <div className="container mx-auto px-4 text-center relative z-10 space-y-8">
+          <FadeIn className="space-y-4 mb-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
               My Projects
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Innovative solutions and creative implementations across web, mobile, and API development
             </p>
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-blue-100 text-sm">{projects.filter(p => p.status === 'completed').length} Completed</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                <span className="text-blue-100 text-sm">{categories.length - 1} Categories</span>
-              </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                <span className="text-blue-100 text-sm">{projects.filter(p => p.featured).length} Featured</span>
-              </div>
-            </div>
           </FadeIn>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-muted-foreground text-sm">{projects.filter(p => p.status === 'completed').length} Completed</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
+              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+              <span className="text-muted-foreground text-sm">{categories.length - 1} Categories</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+              <span className="text-muted-foreground text-sm">{projects.filter(p => p.featured).length} Featured</span>
+            </div>
+          </div>
         </div>
       </section>
       
@@ -195,8 +189,13 @@ export default function ProjectsPage() {
       </div>
 
       {/* Modern Search and Filters */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
+      <section className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+        {/* Background decorations */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           {/* Modern Search Section with Glass Morphism */}
           <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-blue-200/50 dark:border-blue-800/50 mb-12">
             {/* Floating gradient background */}
@@ -376,8 +375,13 @@ export default function ProjectsPage() {
 
       {/* Featured Projects */}
       {featuredProjects.length > 0 && (
-        <section className="py-12">
-          <div className="container mx-auto px-4 space-y-8">
+        <section className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+          {/* Background decorations */}
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          </div>
+          <div className="container mx-auto px-4 space-y-8 relative z-10">
             <FadeIn>
               <h2 className="text-3xl md:text-4xl font-bold text-center">
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -459,8 +463,13 @@ export default function ProjectsPage() {
 
       {/* Other Projects */}
       {otherProjects.length > 0 && (
-        <section className="py-12">
-          <div className="container mx-auto px-4 space-y-8">
+        <section className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+          {/* Background decorations */}
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          </div>
+          <div className="container mx-auto px-4 space-y-8 relative z-10">
             <FadeIn>
               <h2 className="text-3xl md:text-4xl font-bold text-center">
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">

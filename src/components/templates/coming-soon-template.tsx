@@ -148,82 +148,80 @@ export function ComingSoonTemplate({
   }
 
   return (
-    <div className={cn("space-y-8", className)}>
+    <div className={cn("space-y-6", className)}>
       {/* Main Coming Soon Card */}
-      <HoverGlow glowColor="rgb(59, 130, 246)">
-        <Card className="border-2 border-dashed border-border/50 bg-gradient-to-br from-background to-muted/20">
-          <CardHeader className="text-center pb-4">
-            <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
-              <Construction className="h-8 w-8 text-white" />
+      <Card className="border-2 border-dashed border-border/50 bg-transparent backdrop-blur-sm">
+          <CardHeader className="text-center pb-6">
+            <div className="mx-auto mb-6 h-20 w-20 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-xl">
+              <Construction className="h-10 w-10 text-white" />
             </div>
-            <CardTitle className="text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
               {title}
             </CardTitle>
             {estimatedLaunch && (
-              <Badge variant="outline" className="w-fit mx-auto mt-2">
-                <Clock className="w-3 h-3 mr-1" />
+              <Badge variant="outline" className="w-fit mx-auto bg-background/80 backdrop-blur-sm">
+                <Clock className="w-4 h-4 mr-2" />
                 Expected: {estimatedLaunch}
               </Badge>
             )}
           </CardHeader>
-          <CardContent className="text-center space-y-6">
-            <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">
+          <CardContent className="px-8 pb-8">
+            <p className="text-muted-foreground leading-relaxed text-center max-w-2xl mx-auto text-lg mb-8">
               {description}
             </p>
 
             {/* Features Grid */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {features.map((feature, index) => (
-                <div key={index} className="p-4 rounded-lg border bg-card/50 backdrop-blur-sm">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 p-2 rounded-md bg-primary/10 text-primary">
-                      {feature.icon}
-                    </div>
-                    <div className="space-y-1 text-left">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-medium text-sm">{feature.title}</h4>
-                        <Badge
-                          variant="secondary"
-                          className={cn("text-xs px-1.5 py-0.5", getStatusColor(feature.status))}
-                        >
-                          {getStatusText(feature.status)}
-                        </Badge>
+                <div key={index} className="group p-4 rounded-xl border bg-background/80 backdrop-blur-sm hover:shadow-lg transition-all duration-300">
+                  <div className="flex flex-col space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-primary">
+                          {feature.icon}
+                        </div>
+                        <h4 className="font-semibold text-sm">{feature.title}</h4>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {feature.description}
-                      </p>
+                      <Badge
+                        variant="secondary"
+                        className={cn("text-xs px-2 py-1", getStatusColor(feature.status))}
+                      >
+                        {getStatusText(feature.status)}
+                      </Badge>
                     </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
-      </HoverGlow>
 
       {/* Contact CTA Section */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/50 dark:to-purple-950/50 border-blue-200 dark:border-blue-800">
-        <CardContent className="p-8 text-center space-y-6">
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-foreground">
+      <Card className="bg-background/80 border-blue-200/50 dark:border-blue-800/50 backdrop-blur-sm">
+        <CardContent className="p-10 text-center">
+          <div className="space-y-4 mb-8">
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               {contactCTA.title}
             </h3>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
               {contactCTA.description}
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Link href={contactCTA.primaryButton.href}>
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg">
+              <Button size="lg" className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300">
                 {contactCTA.primaryButton.text}
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
 
             {contactCTA.secondaryButton && (
               <Link href={contactCTA.secondaryButton.href}>
-                <Button variant="outline" size="lg" className="border-blue-200 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950/50">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto px-8 py-3 border-2 border-blue-200 hover:bg-blue-50 dark:border-blue-800 dark:hover:bg-blue-950/50 hover:shadow-lg transition-all duration-300">
                   {contactCTA.secondaryButton.text}
                 </Button>
               </Link>
@@ -231,10 +229,10 @@ export function ComingSoonTemplate({
           </div>
 
           {/* Quick Contact Info */}
-          <div className="pt-4 border-t border-border/50">
+          <div className="pt-6 border-t border-border/30">
             <p className="text-sm text-muted-foreground">
               Or reach out directly via{' '}
-              <Link href="/contact" className="font-medium text-primary hover:underline">
+              <Link href="/contact" className="font-semibold text-primary hover:text-primary/80 underline underline-offset-2 transition-colors">
                 email
               </Link>
               {' '}for immediate assistance
