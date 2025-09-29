@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { ScrollReveal, HoverGlow } from '@/components/scroll-effects'
 import { FloatingAnimation } from '@/components/animations'
 import { ModernCard } from '@/components/modern-card'
-import { Globe, Database, Smartphone, Code, Monitor, Settings } from 'lucide-react'
+import { Globe, Database, Smartphone, Code, Monitor, Settings, Star, ArrowRight } from 'lucide-react'
 
 interface Service {
   id: string
@@ -120,31 +121,107 @@ export function ServicesSection() {
           </p>
         </ScrollReveal>
 
-        <div className={`grid gap-6 ${
-          services.length === 1 ? 'max-w-md mx-auto' :
-          services.length === 2 ? 'md:grid-cols-2 max-w-2xl mx-auto' :
-          services.length === 3 ? 'md:grid-cols-2 lg:grid-cols-3' :
-          'md:grid-cols-2 lg:grid-cols-4'
-        }`}>
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {services.map((service, index) => (
             <ScrollReveal key={service.id} direction="up" delay={0.1 * (index + 1)}>
               <HoverGlow glowColor="rgb(59, 130, 246)">
                 <ModernCard variant="gradient" hover="lift">
-                  <Card className="text-center h-full border-0 bg-transparent shadow-none">
-                    <CardHeader>
+                  <Card className="h-full border-0 bg-transparent shadow-none group overflow-hidden">
+                    <CardHeader className="text-center pb-3 px-6 pt-6">
+                      {/* Service Image or Icon */}
                       <FloatingAnimation>
-                        <div className="mx-auto mb-4 h-16 w-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-                          {getIconComponent(service.icon, service.category)}
+                        <div className="flex justify-center mb-3 relative">
+                          {service.image && service.image.trim() !== '' ? (
+                            <div className="h-20 w-20 rounded-2xl overflow-hidden bg-gradient-to-r from-blue-500 to-purple-500 p-0.5 shadow-lg">
+                              <img
+                                src={service.image}
+                                alt={service.title}
+                                className="w-full h-full object-cover object-center rounded-xl bg-white"
+                                onError={(e) => {
+                                  console.log('Image failed to load:', service.image)
+                                  e.currentTarget.style.display = 'none'
+                                  e.currentTarget.nextElementSibling?.classList.remove('hidden')
+                                }}
+                              />
+                              <div className="hidden h-20 w-20 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+                                {getIconComponent(service.icon, service.category)}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="h-20 w-20 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+                              {getIconComponent(service.icon, service.category)}
+                            </div>
+                          )}
+                          {service.featured && (
+                            <div className="absolute -top-1 -right-1">
+                              <Badge variant="default" className="bg-yellow-500 hover:bg-yellow-600 text-yellow-50 text-[10px] px-1.5 py-0.5 shadow-md">
+                                <Star className="w-2.5 h-2.5 mr-0.5 fill-current" />
+                                Featured
+                              </Badge>
+                            </div>
+                          )}
                         </div>
                       </FloatingAnimation>
-                      <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        {service.title}
-                      </CardTitle>
+
+                      {/* Title and Category */}
+                      <div className="space-y-1.5">
+                        <CardTitle className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                          {service.title}
+                        </CardTitle>
+                        {service.category && (
+                          <Badge variant="outline" className="text-[10px] px-2 py-0.5">
+                            {service.category}
+                          </Badge>
+                        )}
+                      </div>
                     </CardHeader>
-                    <CardContent>
-                      <CardDescription className="text-base">
-                        {service.shortDesc || service.features.join(', ')}
-                      </CardDescription>
+
+                    <CardContent className="space-y-3 text-center px-6 pb-6">
+                      {/* Description - Show both shortDesc AND description */}
+                      <div className="space-y-1">
+                        {service.shortDesc && service.shortDesc.trim() !== '' && (
+                          <p className="text-sm font-medium text-foreground">
+                            {service.shortDesc}
+                          </p>
+                        )}
+                        {service.description && service.description.trim() !== '' && service.description !== service.shortDesc && (
+                          <CardDescription className="text-xs leading-relaxed">
+                            {service.description}
+                          </CardDescription>
+                        )}
+                      </div>
+
+                      {/* Features/Technologies */}
+                      {service.features.length > 0 && (
+                        <div className="space-y-2">
+                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                            Technologies
+                          </p>
+                          <div className="flex flex-wrap gap-1 justify-center">
+                            {service.features.slice(0, 3).map((feature, featureIndex) => (
+                              <Badge key={featureIndex} variant="secondary" className="text-[10px] px-1.5 py-0.5">
+                                {feature}
+                              </Badge>
+                            ))}
+                            {service.features.length > 3 && (
+                              <Badge variant="secondary" className="text-[10px] px-1.5 py-0.5">
+                                +{service.features.length - 3}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Learn More Button */}
+                      <div className="pt-2">
+                        <a
+                          href={`/services/${service.id}`}
+                          className="inline-flex items-center text-xs text-primary hover:text-primary/80 font-medium transition-colors duration-200 group-hover:underline"
+                        >
+                          Learn More
+                          <ArrowRight className="w-3 h-3 ml-1 transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </a>
+                      </div>
                     </CardContent>
                   </Card>
                 </ModernCard>

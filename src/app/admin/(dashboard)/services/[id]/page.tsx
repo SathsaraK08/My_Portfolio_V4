@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import Link from 'next/link'
+import { ProfessionalImageUpload } from '@/components/professional-image-upload'
 
 interface Service {
   id: string
@@ -25,7 +26,7 @@ interface Service {
   isVisible: boolean
 }
 
-export default function EditServicePage({ params }: { params: { id: string } }) {
+export default function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(true)
@@ -46,12 +47,16 @@ export default function EditServicePage({ params }: { params: { id: string } }) 
   })
 
   useEffect(() => {
-    fetchService()
-  }, [params.id])
+    const loadService = async () => {
+      const { id } = await params
+      fetchService(id)
+    }
+    loadService()
+  }, [])
 
-  const fetchService = async () => {
+  const fetchService = async (id: string) => {
     try {
-      const response = await fetch(`/api/admin/services/${params.id}`)
+      const response = await fetch(`/api/admin/services/${id}`)
       if (!response.ok) {
         throw new Error('Failed to fetch service')
       }
@@ -85,6 +90,10 @@ export default function EditServicePage({ params }: { params: { id: string } }) 
     setFormData(prev => ({ ...prev, [name]: checked }))
   }
 
+  const handleImageUpload = (url: string, path: string) => {
+    setFormData(prev => ({ ...prev, image: url }))
+  }
+
   const addFeature = () => {
     setFeatures(prev => [...prev, ''])
   }
@@ -105,7 +114,8 @@ export default function EditServicePage({ params }: { params: { id: string } }) 
     try {
       const filteredFeatures = features.filter(feature => feature.trim() !== '')
 
-      const response = await fetch(`/api/admin/services/${params.id}`, {
+      const { id } = await params
+      const response = await fetch(`/api/admin/services/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -230,16 +240,16 @@ export default function EditServicePage({ params }: { params: { id: string } }) 
                   placeholder="🌐 or any emoji/text"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="image">Image URL</Label>
-                <Input
-                  id="image"
-                  name="image"
-                  value={formData.image}
-                  onChange={handleInputChange}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Service Image/Logo</Label>
+              <ProfessionalImageUpload
+                onUpload={handleImageUpload}
+                currentImage={formData.image}
+                maxSize={10}
+                showPreview={true}
+              />
             </div>
 
             <div className="space-y-2">
