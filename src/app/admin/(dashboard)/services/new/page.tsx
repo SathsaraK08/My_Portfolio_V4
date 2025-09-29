@@ -1,3 +1,20 @@
+/**
+ * Create New Service Page
+ *
+ * Form interface for creating new services. Features:
+ * - Comprehensive service creation form
+ * - Image upload with professional optimization
+ * - Category selection with dropdown
+ * - Dynamic features/technologies management
+ * - Form validation and error handling
+ * - Auto-save functionality
+ *
+ * @route /admin/services/new
+ * @access Protected (Admin only)
+ * @author Portfolio Admin System
+ * @version 2.0.0
+ */
+
 'use client'
 
 import { useState } from 'react'
@@ -11,6 +28,7 @@ import { Switch } from '@/components/ui/switch'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import Link from 'next/link'
 import { ProfessionalImageUpload } from '@/components/professional-image-upload'
+import { CategorySelect } from '@/components/admin/category-select'
 
 export default function NewServicePage() {
   const router = useRouter()
@@ -127,12 +145,10 @@ export default function NewServicePage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Input
-                  id="category"
-                  name="category"
+                <CategorySelect
                   value={formData.category}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Web Development"
+                  onChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                  placeholder="Select a category"
                 />
               </div>
             </div>

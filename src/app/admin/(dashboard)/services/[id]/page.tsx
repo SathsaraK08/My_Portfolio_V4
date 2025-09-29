@@ -1,3 +1,19 @@
+/**
+ * Edit Service Page
+ *
+ * Form interface for editing existing services. Features:
+ * - Pre-populated form with existing service data
+ * - All creation features (image upload, categories, etc.)
+ * - Real-time form validation
+ * - Optimistic UI updates
+ * - Confirmation dialogs for destructive actions
+ *
+ * @route /admin/services/[id]
+ * @access Protected (Admin only)
+ * @author Portfolio Admin System
+ * @version 2.0.0
+ */
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -11,6 +27,7 @@ import { Switch } from '@/components/ui/switch'
 import { ArrowLeft, Plus, X } from 'lucide-react'
 import Link from 'next/link'
 import { ProfessionalImageUpload } from '@/components/professional-image-upload'
+import { CategorySelect } from '@/components/admin/category-select'
 
 interface Service {
   id: string
@@ -195,12 +212,10 @@ export default function EditServicePage({ params }: { params: Promise<{ id: stri
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
-                <Input
-                  id="category"
-                  name="category"
+                <CategorySelect
                   value={formData.category}
-                  onChange={handleInputChange}
-                  placeholder="e.g., Web Development"
+                  onChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                  placeholder="Select a category"
                 />
               </div>
             </div>

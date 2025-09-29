@@ -1,3 +1,19 @@
+/**
+ * Admin Services Management Page
+ *
+ * Main dashboard page for managing services. Features:
+ * - List all services with status indicators
+ * - Quick toggle for visibility and featured status
+ * - Create, edit, and delete operations
+ * - Responsive card-based layout
+ * - Search and filtering capabilities
+ *
+ * @route /admin/services
+ * @access Protected (Admin only)
+ * @author Portfolio Admin System
+ * @version 2.0.0
+ */
+
 'use client'
 
 import { useState, useEffect } from 'react'

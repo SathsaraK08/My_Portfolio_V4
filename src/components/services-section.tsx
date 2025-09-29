@@ -1,3 +1,21 @@
+/**
+ * Services Section Component
+ *
+ * Displays dynamic services from the database in a responsive grid layout.
+ * Features include:
+ * - Dynamic service fetching from API
+ * - Responsive grid layout (1-4 columns based on screen size)
+ * - Service images with fallback to icons
+ * - Featured service badges
+ * - Technology/feature tags
+ * - Navigation to individual service detail pages
+ * - Error handling and loading states
+ *
+ * @author Portfolio System
+ * @version 2.0.0
+ * @since 1.0.0
+ */
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -8,52 +26,79 @@ import { FloatingAnimation } from '@/components/animations'
 import { ModernCard } from '@/components/modern-card'
 import { Globe, Database, Smartphone, Code, Monitor, Settings, Star, ArrowRight } from 'lucide-react'
 
+/**
+ * Service Interface
+ * Defines the structure of a service object
+ */
 interface Service {
-  id: string
-  title: string
-  description: string
-  shortDesc?: string
-  icon?: string
-  image?: string
-  features: string[]
-  category?: string
-  featured: boolean
-  order: number
-  isVisible: boolean
+  id: string              // Unique identifier
+  title: string           // Service name/title
+  description: string     // Full service description
+  shortDesc?: string      // Brief description for cards
+  icon?: string          // Emoji or icon identifier
+  image?: string         // Service image/logo URL
+  features: string[]     // Technologies/tools used
+  category?: string      // Service category
+  featured: boolean      // Whether service is featured
+  order: number         // Display order
+  isVisible: boolean    // Whether service is published
 }
 
-// Icon mapping for common service types
+/**
+ * Icon Mapping Configuration
+ * Maps service categories/types to Lucide React icons for fallback display
+ * when no custom image is provided
+ */
 const iconMapping: { [key: string]: any } = {
-  'frontend': Globe,
-  'backend': Database,
-  'mobile': Smartphone,
-  'devops': Code,
-  'web': Monitor,
-  'api': Settings,
-  'fullstack': Code,
-  'ui': Monitor,
-  'ux': Monitor,
+  'frontend': Globe,        // Frontend development services
+  'backend': Database,      // Backend/server-side services
+  'mobile': Smartphone,     // Mobile app development
+  'devops': Code,          // DevOps and deployment services
+  'web': Monitor,          // General web development
+  'api': Settings,         // API development services
+  'fullstack': Code,       // Full-stack development
+  'ui': Monitor,           // UI design services
+  'ux': Monitor,           // UX design services
 }
 
+/**
+ * Get Icon Component
+ *
+ * Determines what icon to display based on available data:
+ * 1. Custom icon/emoji from service data
+ * 2. Category-based icon mapping
+ * 3. Default Code icon as fallback
+ *
+ * @param iconString - Custom icon/emoji string from service
+ * @param category - Service category for icon mapping
+ * @returns JSX element with appropriate icon
+ */
 function getIconComponent(iconString?: string, category?: string) {
+  // No custom icon provided - use category mapping
   if (!iconString) {
-    // Try to map based on category or title
     const categoryLower = category?.toLowerCase() || ''
     const IconComponent = iconMapping[categoryLower] || Code
     return <IconComponent className="h-8 w-8 text-white" />
   }
 
-  // If it's an emoji or single character, return as text
+  // Short string (likely emoji) - render as text
   if (iconString.length <= 2) {
     return <span className="text-2xl">{iconString}</span>
   }
 
-  // If it's a lucide icon name, try to map it
+  // Try to match as lucide icon name, fallback to Code icon
   const IconComponent = iconMapping[iconString.toLowerCase()] || Code
   return <IconComponent className="h-8 w-8 text-white" />
 }
 
+/**
+ * ServicesSection Component
+ *
+ * Main component that fetches and displays all visible services in a grid layout.
+ * Handles loading states, errors, and responsive design automatically.
+ */
 export function ServicesSection() {
+  // Component state management
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -103,17 +148,17 @@ export function ServicesSection() {
   }
 
   return (
-    <section className="bg-muted/50 py-16 md:py-24 relative overflow-hidden">
-      {/* Animated background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-24 h-24 bg-blue-500 rounded-full animate-bounce"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-pink-500 rounded-full animate-spin"></div>
+    <section id="services" className="relative overflow-hidden py-12 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+      {/* Background decorations */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 space-y-12 relative z-10">
-        <ScrollReveal className="text-center space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 space-y-8 relative z-10">
+        <ScrollReveal className="text-center space-y-4 mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
             What I Do
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -121,7 +166,7 @@ export function ServicesSection() {
           </p>
         </ScrollReveal>
 
-        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-6xl mx-auto">
           {services.map((service, index) => (
             <ScrollReveal key={service.id} direction="up" delay={0.1 * (index + 1)}>
               <HoverGlow glowColor="rgb(59, 130, 246)">

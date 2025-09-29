@@ -1,13 +1,32 @@
+/**
+ * Admin Services API Routes
+ *
+ * Handles CRUD operations for services management:
+ * - GET: List all services (admin view)
+ * - POST: Create new service
+ *
+ * @route /api/admin/services
+ * @access Protected (Admin only)
+ * @author Portfolio API System
+ * @version 2.0.0
+ */
+
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
+/**
+ * GET /api/admin/services
+ *
+ * Retrieves all services for admin management.
+ * Returns services ordered by: featured (desc), order (asc), title (asc)
+ */
 export async function GET() {
   try {
     const services = await prisma.service.findMany({
       orderBy: [
-        { featured: 'desc' },
-        { order: 'asc' },
-        { title: 'asc' }
+        { featured: 'desc' },  // Featured services first
+        { order: 'asc' },      // Then by custom order
+        { title: 'asc' }       // Finally alphabetically
       ]
     })
 
@@ -18,11 +37,17 @@ export async function GET() {
   }
 }
 
+/**
+ * POST /api/admin/services
+ *
+ * Creates a new service with auto-generated order number.
+ * Automatically assigns the next available order number if not provided.
+ */
 export async function POST(request: Request) {
   try {
     const data = await request.json()
 
-    // Get the highest order number and add 1
+    // Auto-generate order number if not provided
     const maxOrder = await prisma.service.findFirst({
       orderBy: { order: 'desc' },
       select: { order: true }
@@ -39,7 +64,7 @@ export async function POST(request: Request) {
         pricing: data.pricing,
         category: data.category,
         featured: data.featured || false,
-        order: data.order ?? (maxOrder?.order || 0) + 1,
+        order: data.order ?? (maxOrder?.order || 0) + 1,  // Auto-increment order
         isVisible: data.isVisible ?? true,
       }
     })
