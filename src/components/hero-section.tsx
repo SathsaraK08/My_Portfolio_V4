@@ -52,7 +52,7 @@ export function HeroSection() {
   }, [profile?.avatar, imageLoaded, imageError])
 
   return (
-    <section id="home" className="relative min-h-screen pt-40 pb-20 md:pt-44 md:pb-24 lg:pt-48 lg:pb-32 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <section id="home" className="relative min-h-screen flex items-center pt-20 pb-20 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
@@ -114,7 +114,7 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      <div className="container max-w-7xl mx-auto relative z-10 h-full flex items-center">
+      <div className="container max-w-7xl mx-auto relative z-10 w-full">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center w-full">
 
           {/* Left Content - Takes 6 columns */}
