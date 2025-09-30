@@ -52,7 +52,7 @@ export function HeroSection() {
   }, [profile?.avatar, imageLoaded, imageError])
 
   return (
-    <section className="relative min-h-screen py-20 md:py-24 lg:py-32 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <section id="home" className="relative min-h-screen pt-40 pb-20 md:pt-44 md:pb-24 lg:pt-48 lg:pb-32 px-4 bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Subtle background pattern */}
       <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
 
