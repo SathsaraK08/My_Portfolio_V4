@@ -33,28 +33,31 @@ interface ProjectsGridProps {
 export function ProjectsGrid({ limit, showFeatured = false, category }: ProjectsGridProps) {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function fetchProjects() {
       try {
+        setLoading(true)
+        setError(null)
+
         const params = new URLSearchParams()
         if (limit) params.append('limit', limit.toString())
         if (showFeatured) params.append('featured', 'true')
         if (category) params.append('category', category)
 
         const response = await fetch(`/api/public/projects?${params}`)
-        if (response.ok) {
-          const data = await response.json()
-          setProjects(data)
-        } else {
-          // Fallback to static projects when API fails
-          console.warn('API unavailable, showing static projects')
-          setProjects(getStaticProjects())
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects')
         }
-      } catch (error) {
-        console.error('Failed to fetch projects:', error)
-        // Fallback to static projects when fetch fails
-        setProjects(getStaticProjects())
+
+        const data = await response.json()
+        setProjects(data)
+      } catch (err) {
+        console.error('Failed to fetch projects:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load projects')
+        setProjects([])
       } finally {
         setLoading(false)
       }
@@ -62,113 +65,6 @@ export function ProjectsGrid({ limit, showFeatured = false, category }: Projects
 
     fetchProjects()
   }, [limit, showFeatured, category])
-
-  // Static fallback projects when database is unavailable
-  function getStaticProjects(): Project[] {
-    const staticProjects: Project[] = [
-      {
-        id: 'static-1',
-        title: 'E-Commerce Platform',
-        description: 'A full-stack e-commerce solution with modern payment integration and real-time inventory management.',
-        shortDesc: 'Modern e-commerce platform with Stripe integration',
-        image: '/placeholder-project1.jpg',
-        techStack: ['React', 'Next.js', 'TypeScript', 'Stripe', 'PostgreSQL'],
-        category: 'Full Stack',
-        githubUrl: 'https://github.com',
-        liveUrl: 'https://demo.com',
-        status: 'completed',
-        featured: true,
-        startDate: '2024-01-01',
-        endDate: '2024-03-01'
-      },
-      {
-        id: 'static-2',
-        title: 'Task Management App',
-        description: 'Collaborative project management tool with real-time updates, team collaboration features, and advanced analytics.',
-        shortDesc: 'Real-time collaborative task management',
-        image: '/placeholder-project2.jpg',
-        techStack: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Express'],
-        category: 'Full Stack',
-        githubUrl: 'https://github.com',
-        status: 'completed',
-        featured: true,
-        startDate: '2024-02-01',
-        endDate: '2024-04-01'
-      },
-      {
-        id: 'static-3',
-        title: 'Weather Dashboard',
-        description: 'Beautiful weather application with forecasts, interactive maps, and location-based services.',
-        shortDesc: 'Interactive weather app with forecasts',
-        image: '/placeholder-project3.jpg',
-        techStack: ['Vue.js', 'API Integration', 'Charts.js', 'CSS3'],
-        category: 'Frontend',
-        githubUrl: 'https://github.com',
-        liveUrl: 'https://weather-demo.com',
-        status: 'completed',
-        featured: false,
-        startDate: '2024-03-01',
-        endDate: '2024-04-01'
-      },
-      {
-        id: 'static-4',
-        title: 'AI Chat Application',
-        description: 'Modern chat application with AI integration, real-time messaging, and smart responses.',
-        shortDesc: 'AI-powered chat application',
-        image: '/placeholder-project4.jpg',
-        techStack: ['React', 'Python', 'OpenAI', 'WebSocket', 'FastAPI'],
-        category: 'AI/ML',
-        githubUrl: 'https://github.com',
-        status: 'ongoing',
-        featured: true,
-        startDate: '2024-04-01'
-      },
-      {
-        id: 'static-5',
-        title: 'Portfolio Website',
-        description: 'Modern portfolio website with dynamic content management, dark mode, and responsive design.',
-        shortDesc: 'Personal portfolio with CMS',
-        image: '/placeholder-project5.jpg',
-        techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma', 'PostgreSQL'],
-        category: 'Frontend',
-        githubUrl: 'https://github.com',
-        liveUrl: 'https://portfolio-demo.com',
-        status: 'completed',
-        featured: false,
-        startDate: '2024-05-01',
-        endDate: '2024-06-01'
-      },
-      {
-        id: 'static-6',
-        title: 'Learning Management System',
-        description: 'Comprehensive LMS with course management, video streaming, progress tracking, and certificates.',
-        shortDesc: 'Full-featured learning management system',
-        image: '/placeholder-project6.jpg',
-        techStack: ['React', 'Node.js', 'PostgreSQL', 'AWS', 'Redis'],
-        category: 'Full Stack',
-        githubUrl: 'https://github.com',
-        status: 'ongoing',
-        featured: false,
-        startDate: '2024-06-01'
-      }
-    ]
-
-    let filteredProjects = staticProjects
-
-    if (showFeatured) {
-      filteredProjects = filteredProjects.filter(p => p.featured)
-    }
-
-    if (category && category !== 'all') {
-      filteredProjects = filteredProjects.filter(p => p.category.toLowerCase() === category.toLowerCase())
-    }
-
-    if (limit) {
-      filteredProjects = filteredProjects.slice(0, limit)
-    }
-
-    return filteredProjects
-  }
 
   if (loading) {
     return (
@@ -192,10 +88,20 @@ export function ProjectsGrid({ limit, showFeatured = false, category }: Projects
     )
   }
 
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-destructive mb-4">{error}</p>
+        <p className="text-muted-foreground">Please check the admin CMS to add projects.</p>
+      </div>
+    )
+  }
+
   if (projects.length === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">No projects found.</p>
+        <p className="text-sm text-muted-foreground mt-2">Add projects through the admin CMS to display them here.</p>
       </div>
     )
   }
