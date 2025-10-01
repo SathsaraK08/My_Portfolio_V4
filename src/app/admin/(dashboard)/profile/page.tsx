@@ -9,8 +9,9 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { User, Mail, Phone, MapPin, Globe, Camera, FileText, Github, Linkedin, Twitter, Instagram, Youtube, Loader2, Save, Eye, EyeOff } from "lucide-react"
+import { User, Mail, Phone, MapPin, Globe, Camera, FileText, Github, Linkedin, Twitter, Instagram, Youtube, Loader2, Save, Eye, EyeOff, Sparkles } from "lucide-react"
 import { FileUpload, UploadedFile } from "@/components/file-upload"
+import { motion, AnimatePresence } from "framer-motion"
 
 const profileSchema = z.object({
   fullName: z.string().optional().or(z.literal("")),
@@ -187,83 +188,165 @@ export default function ProfilePage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center space-y-4">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto" />
-          <p className="text-muted-foreground">Loading profile...</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center space-y-4"
+        >
+          <Loader2 className="h-12 w-12 animate-spin mx-auto text-blue-600" />
+          <p className="text-lg text-muted-foreground">Loading profile...</p>
+        </motion.div>
       </div>
     )
   }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      {/* Header with Animation */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center justify-between"
+      >
         <div>
-          <h1 className="text-3xl font-bold">Profile & Home Content</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+            Profile & Home Content
+          </h1>
+          <p className="text-muted-foreground mt-2">
             Manage your personal information and home page content
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {watchedValues.isVisible ? (
-            <Badge className="bg-green-100 text-green-800 border-green-200">
-              <Eye className="h-3 w-3 mr-1" />
-              Visible
-            </Badge>
-          ) : (
-            <Badge variant="secondary">
-              <EyeOff className="h-3 w-3 mr-1" />
-              Hidden
-            </Badge>
-          )}
+          <AnimatePresence mode="wait">
+            {watchedValues.isVisible ? (
+              <motion.div
+                key="visible"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                exit={{ scale: 0, rotate: 180 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-md">
+                  <Eye className="h-3 w-3 mr-1" />
+                  Visible
+                </Badge>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="hidden"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                exit={{ scale: 0, rotate: 180 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <Badge variant="secondary" className="shadow-sm">
+                  <EyeOff className="h-3 w-3 mr-1" />
+                  Hidden
+                </Badge>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <Tabs defaultValue="basic" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="basic">Basic Info</TabsTrigger>
-            <TabsTrigger value="contact">Contact & Social</TabsTrigger>
-            <TabsTrigger value="assets">Files & Assets</TabsTrigger>
-          </TabsList>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <TabsList className="grid w-full grid-cols-3 bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-900 dark:to-slate-950 p-1 rounded-xl shadow-md">
+              <TabsTrigger
+                value="basic"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-300 rounded-lg"
+              >
+                <motion.span whileHover={{ scale: 1.05 }} className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Basic Info
+                </motion.span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="contact"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-300 rounded-lg"
+              >
+                <motion.span whileHover={{ scale: 1.05 }} className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  Contact & Social
+                </motion.span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="assets"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-300 rounded-lg"
+              >
+                <motion.span whileHover={{ scale: 1.05 }} className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Files & Assets
+                </motion.span>
+              </TabsTrigger>
+            </TabsList>
+          </motion.div>
 
           <TabsContent value="basic" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+            <Card className="group border border-border/60 bg-gradient-to-br from-background via-background to-background/50 backdrop-blur-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500 hover:border-blue-500/30 relative overflow-hidden">
+              {/* Shimmer Effect */}
+              <motion.div
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                initial={false}
+              />
+
+              <CardHeader className="relative z-10">
+                <CardTitle className="flex items-center gap-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20"
+                  >
+                    <User className="h-5 w-5" />
+                  </motion.div>
                   Basic Information
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="flex items-center gap-2">
+                  <Sparkles className="h-3 w-3 text-blue-600" />
                   Your basic personal information that appears on the home page
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 relative z-10">
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Full Name *</label>
+                  <motion.div className="space-y-2" whileHover={{ scale: 1.01 }} transition={{ duration: 0.2 }}>
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <User className="h-3 w-3 text-blue-600" />
+                      Full Name *
+                    </label>
                     <Input
                       placeholder="John Doe"
                       {...register("fullName")}
-                      className={errors.fullName ? "border-red-500" : ""}
+                      className={`transition-all duration-300 hover:border-blue-500/50 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 ${errors.fullName ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""}`}
                     />
                     {errors.fullName && (
                       <p className="text-sm text-red-500">{errors.fullName.message}</p>
                     )}
-                  </div>
+                  </motion.div>
 
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Professional Title *</label>
+                  <motion.div className="space-y-2" whileHover={{ scale: 1.01 }} transition={{ duration: 0.2 }}>
+                    <label className="text-sm font-medium flex items-center gap-2">
+                      <Sparkles className="h-3 w-3 text-purple-600" />
+                      Professional Title *
+                    </label>
                     <Input
                       placeholder="Full Stack Developer"
                       {...register("title")}
-                      className={errors.title ? "border-red-500" : ""}
+                      className={`transition-all duration-300 hover:border-purple-500/50 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 ${errors.title ? "border-red-500 focus:border-red-500 focus:ring-red-500/20" : ""}`}
                     />
                     {errors.title && (
                       <p className="text-sm text-red-500">{errors.title.message}</p>
                     )}
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="space-y-2">
@@ -299,10 +382,20 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="contact" className="space-y-6">
-            <Card>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+            <Card className="group border border-border/60 bg-gradient-to-br from-background via-background to-background/50 backdrop-blur-sm hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-500 hover:border-purple-500/30 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                initial={false}
+              />
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Mail className="h-5 w-5" />
@@ -439,20 +532,36 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="assets" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+            <Card className="group border border-border/60 bg-gradient-to-br from-background via-background to-background/50 backdrop-blur-sm hover:shadow-xl hover:shadow-purple-500/5 transition-all duration-500 hover:border-purple-500/30 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                initial={false}
+              />
+              <CardHeader className="relative z-10">
+                <CardTitle className="flex items-center gap-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20"
+                  >
+                    <FileText className="h-5 w-5" />
+                  </motion.div>
                   Files & Assets
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="flex items-center gap-2">
+                  <Camera className="h-3 w-3 text-purple-600" />
                   Upload and manage your profile assets
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 relative z-10">
                 <div className="space-y-2">
                   <label className="text-sm font-medium flex items-center gap-2">
                     <Camera className="h-4 w-4" />
@@ -522,50 +631,86 @@ export default function ProfilePage() {
                 )}
               </CardContent>
             </Card>
+            </motion.div>
           </TabsContent>
         </Tabs>
 
-        {/* Save Button */}
-        <div className="flex items-center justify-between border-t pt-6">
+        {/* Save Button - Enhanced */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex items-center justify-between border-t border-border/50 pt-6 mt-6"
+        >
           <div className="flex items-center gap-2">
-            {saveStatus === 'success' && (
-              <Badge className="bg-green-100 text-green-800 border-green-200">
-                Changes saved successfully
-              </Badge>
-            )}
-            {saveStatus === 'error' && (
-              <Badge variant="destructive">
-                Failed to save changes
-              </Badge>
-            )}
+            <AnimatePresence mode="wait">
+              {saveStatus === 'success' && (
+                <motion.div
+                  key="success"
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  exit={{ scale: 0, rotate: 180 }}
+                >
+                  <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-lg">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 0.5 }}
+                      className="mr-2"
+                    >
+                      ✓
+                    </motion.div>
+                    Changes saved successfully
+                  </Badge>
+                </motion.div>
+              )}
+              {saveStatus === 'error' && (
+                <motion.div
+                  key="error"
+                  initial={{ scale: 0, x: -20 }}
+                  animate={{ scale: 1, x: 0 }}
+                  exit={{ scale: 0, x: 20 }}
+                >
+                  <Badge variant="destructive" className="shadow-lg">
+                    Failed to save changes
+                  </Badge>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" type="button" asChild>
-              <a href="/" target="_blank">
-                <Eye className="h-4 w-4 mr-2" />
-                Preview Live Site
-              </a>
-            </Button>
-            <Button
-              type="submit"
-              disabled={isSaving || !isDirty}
-              className="min-w-[120px]"
-            >
-              {isSaving ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4 mr-2" />
-                  Save Changes
-                </>
-              )}
-            </Button>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button variant="outline" type="button" asChild className="hover:border-blue-500/50 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-all duration-300">
+                <a href="/" target="_blank">
+                  <Eye className="h-4 w-4 mr-2" />
+                  Preview Live Site
+                </a>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                type="submit"
+                disabled={isSaving || !isDirty}
+                className="min-w-[140px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                />
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin relative z-10" />
+                    <span className="relative z-10">Saving...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2 relative z-10" />
+                    <span className="relative z-10">Save Changes</span>
+                  </>
+                )}
+              </Button>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </form>
     </div>
   )
