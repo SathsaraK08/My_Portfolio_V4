@@ -107,29 +107,26 @@ export default async function SkillsPage() {
   const groups = sortGroups(groupSkills(skills))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800" />
-        <div className="absolute inset-0 bg-black/10" />
-
-        {/* Animated background elements */}
+      <section className="relative pt-24 pb-16 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+        {/* Background decorations */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+          <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-10 space-y-8">
           <ScrollReveal>
-            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
               <span className="text-2xl">⚡</span>
-              <span className="text-blue-100 font-medium">Technical Expertise</span>
+              <span className="text-muted-foreground font-medium">Technical Expertise</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
               Skills & Technologies
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               A comprehensive overview of my technical skills and expertise across different domains
             </p>
           </ScrollReveal>
@@ -236,38 +233,17 @@ export default async function SkillsPage() {
         )}
       </section>
 
-      {/* CTA Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800" />
-        <div className="absolute inset-0 bg-black/10" />
-
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+      {/* Section Divider */}
+      <div className="relative py-4">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
         </div>
-
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Ready to Work Together?
-            </h2>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-12 leading-relaxed">
-              Let's leverage these skills to build something amazing together.
-              I'm always excited to take on new challenges.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 border-0 font-semibold" asChild>
-                <Link href="/contact">Start a Project</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10" asChild>
-                <Link href="/projects">View My Work</Link>
-              </Button>
-            </div>
-          </ScrollReveal>
+        <div className="relative flex justify-center">
+          <div className="bg-white dark:bg-gray-900 px-6">
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   )
 }
