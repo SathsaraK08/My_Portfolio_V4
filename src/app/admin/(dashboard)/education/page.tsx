@@ -180,29 +180,29 @@ export default function EducationPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Education Management</h1>
+      <div className="flex items-center justify-between pb-6 border-b">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">Education Management</h1>
           <p className="text-muted-foreground">
             Manage your educational background and qualifications
           </p>
         </div>
-        <Button onClick={openCreateForm} disabled={isFormOpen}>
+        <Button onClick={openCreateForm} disabled={isFormOpen} className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 transition-all duration-200">
           <Plus className="h-4 w-4 mr-2" />
           Add Education
         </Button>
       </div>
 
       {/* Search */}
-      <Card>
+      <Card className="border-l-4 border-l-indigo-500 shadow-sm">
         <CardContent className="pt-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <div className="relative group">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-indigo-500 transition-colors" />
             <Input
               placeholder="Search education records..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 focus:border-indigo-500 transition-colors"
             />
           </div>
         </CardContent>
@@ -210,9 +210,14 @@ export default function EducationPage() {
 
       {/* Form Modal */}
       {isFormOpen && (
-        <Card className="border-2 border-primary">
-          <CardHeader>
-            <CardTitle>{editingEducation ? "Edit Education" : "Add New Education"}</CardTitle>
+        <Card className="border-2 border-indigo-500 shadow-lg animate-in slide-in-from-top">
+          <CardHeader className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950 dark:to-blue-950">
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-2 bg-indigo-100 dark:bg-indigo-900 rounded-lg">
+                <GraduationCap className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+              </div>
+              {editingEducation ? "Edit Education" : "Add New Education"}
+            </CardTitle>
             <CardDescription>
               {editingEducation ? "Update education information" : "Add a new education record to your profile"}
             </CardDescription>
@@ -312,10 +317,10 @@ export default function EducationPage() {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button type="submit">
+                <Button type="submit" className="bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700">
                   {editingEducation ? "Update Education" : "Add Education"}
                 </Button>
-                <Button type="button" variant="outline" onClick={closeForm}>
+                <Button type="button" variant="outline" onClick={closeForm} className="hover:bg-gray-100 dark:hover:bg-gray-800">
                   Cancel
                 </Button>
               </div>
@@ -327,7 +332,7 @@ export default function EducationPage() {
       {/* Education Grid */}
       <div className="grid gap-6">
         {filteredEducation.map((edu) => (
-          <Card key={edu.id} className="hover:shadow-md transition-shadow">
+          <Card key={edu.id} className="hover:shadow-lg hover:scale-[1.01] transition-all duration-200 border-l-4 border-l-indigo-500">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-2 flex-1">

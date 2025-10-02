@@ -153,21 +153,21 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Site Settings</h1>
+      <div className="flex items-center justify-between pb-6 border-b">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Site Settings</h1>
           <p className="text-muted-foreground">
             Configure your website's appearance and functionality
           </p>
         </div>
         <div className="flex items-center gap-2">
           {watchedValues.maintenance ? (
-            <Badge variant="destructive">
+            <Badge variant="destructive" className="animate-pulse">
               <Settings className="h-3 w-3 mr-1" />
               Maintenance Mode
             </Badge>
           ) : (
-            <Badge className="bg-green-100 text-green-800 border-green-200">
+            <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0">
               <Eye className="h-3 w-3 mr-1" />
               Live
             </Badge>
@@ -185,10 +185,12 @@ export default function SettingsPage() {
           </TabsList>
 
           <TabsContent value="general" className="space-y-6">
-            <Card>
-              <CardHeader>
+            <Card className="border-l-4 border-l-blue-500 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-950">
                 <CardTitle className="flex items-center gap-2">
-                  <Globe className="h-5 w-5" />
+                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                    <Globe className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  </div>
                   General Settings
                 </CardTitle>
                 <CardDescription>
@@ -234,10 +236,12 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="branding" className="space-y-6">
-            <Card>
-              <CardHeader>
+            <Card className="border-l-4 border-l-purple-500 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-950">
                 <CardTitle className="flex items-center gap-2">
-                  <FileImage className="h-5 w-5" />
+                  <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                    <FileImage className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  </div>
                   Branding Assets
                 </CardTitle>
                 <CardDescription>
@@ -339,10 +343,12 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="social" className="space-y-6">
-            <Card>
-              <CardHeader>
+            <Card className="border-l-4 border-l-green-500 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader className="bg-gradient-to-r from-green-50 to-transparent dark:from-green-950">
                 <CardTitle className="flex items-center gap-2">
-                  <Share2 className="h-5 w-5" />
+                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                    <Share2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  </div>
                   Social Media Links
                 </CardTitle>
                 <CardDescription>
@@ -384,10 +390,12 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
+            <Card className="border-l-4 border-l-orange-500 shadow-sm hover:shadow-md transition-shadow duration-200">
+              <CardHeader className="bg-gradient-to-r from-orange-50 to-transparent dark:from-orange-950">
                 <CardTitle className="flex items-center gap-2">
-                  <Mail className="h-5 w-5" />
+                  <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
+                    <Mail className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                  </div>
                   Contact Information
                 </CardTitle>
                 <CardDescription>
@@ -454,22 +462,22 @@ export default function SettingsPage() {
         </Tabs>
 
         {/* Save Button */}
-        <div className="flex items-center justify-between border-t pt-6">
+        <div className="flex items-center justify-between border-t pt-6 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-900 p-4 rounded-lg">
           <div className="flex items-center gap-2">
             {saveStatus === 'success' && (
-              <Badge className="bg-green-100 text-green-800 border-green-200">
+              <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 animate-in fade-in slide-in-from-left">
                 Settings saved successfully
               </Badge>
             )}
             {saveStatus === 'error' && (
-              <Badge variant="destructive">
+              <Badge variant="destructive" className="animate-in fade-in slide-in-from-left">
                 Failed to save settings
               </Badge>
             )}
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" asChild>
+            <Button variant="outline" asChild className="hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors">
               <a href="/" target="_blank">
                 <Eye className="h-4 w-4 mr-2" />
                 Preview Site
@@ -478,7 +486,7 @@ export default function SettingsPage() {
             <Button
               type="submit"
               disabled={isSaving || !isDirty}
-              className="min-w-[120px]"
+              className="min-w-[120px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
             >
               {isSaving ? (
                 <>

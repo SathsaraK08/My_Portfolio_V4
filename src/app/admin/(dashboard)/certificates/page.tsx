@@ -185,29 +185,29 @@ export default function CertificatesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Certificates Management</h1>
+      <div className="flex items-center justify-between pb-6 border-b">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">Certificates Management</h1>
           <p className="text-muted-foreground">
             Manage your professional certificates and certifications
           </p>
         </div>
-        <Button onClick={openCreateForm} disabled={isFormOpen}>
+        <Button onClick={openCreateForm} disabled={isFormOpen} className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 transition-all duration-200">
           <Plus className="h-4 w-4 mr-2" />
           Add Certificate
         </Button>
       </div>
 
       {/* Search */}
-      <Card>
+      <Card className="border-l-4 border-l-amber-500 shadow-sm">
         <CardContent className="pt-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <div className="relative group">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-amber-500 transition-colors" />
             <Input
               placeholder="Search certificates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 focus:border-amber-500 transition-colors"
             />
           </div>
         </CardContent>
@@ -215,9 +215,14 @@ export default function CertificatesPage() {
 
       {/* Form Modal */}
       {isFormOpen && (
-        <Card className="border-2 border-primary">
-          <CardHeader>
-            <CardTitle>{editingCertificate ? "Edit Certificate" : "Add New Certificate"}</CardTitle>
+        <Card className="border-2 border-amber-500 shadow-lg animate-in slide-in-from-top">
+          <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950">
+            <CardTitle className="flex items-center gap-2">
+              <div className="p-2 bg-amber-100 dark:bg-amber-900 rounded-lg">
+                <Award className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              {editingCertificate ? "Edit Certificate" : "Add New Certificate"}
+            </CardTitle>
             <CardDescription>
               {editingCertificate ? "Update certificate information" : "Add a new certificate to your profile"}
             </CardDescription>
@@ -342,10 +347,10 @@ export default function CertificatesPage() {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button type="submit">
+                <Button type="submit" className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700">
                   {editingCertificate ? "Update Certificate" : "Add Certificate"}
                 </Button>
-                <Button type="button" variant="outline" onClick={closeForm}>
+                <Button type="button" variant="outline" onClick={closeForm} className="hover:bg-gray-100 dark:hover:bg-gray-800">
                   Cancel
                 </Button>
               </div>
@@ -357,7 +362,7 @@ export default function CertificatesPage() {
       {/* Certificates Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredCertificates.map((certificate) => (
-          <Card key={certificate.id} className="hover:shadow-md transition-shadow">
+          <Card key={certificate.id} className="hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border-l-4 border-l-amber-500">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-2 flex-1">

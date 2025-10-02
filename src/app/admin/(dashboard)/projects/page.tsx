@@ -246,9 +246,9 @@ export default function ProjectsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Projects Management</h1>
+      <div className="flex items-center justify-between pb-6 border-b">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">Projects Management</h1>
           <p className="text-muted-foreground">
             Manage your portfolio projects
             {!isLoading && projects.length > 0 && (
@@ -256,24 +256,24 @@ export default function ProjectsPage() {
             )}
           </p>
         </div>
-        <Button onClick={openCreateForm} disabled={isLoading}>
+        <Button onClick={openCreateForm} disabled={isLoading} className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 transition-all duration-200">
           <Plus className="h-4 w-4 mr-2" />
           Add Project
         </Button>
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="border-l-4 border-l-violet-500 shadow-sm">
         <CardContent className="pt-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative group">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-violet-500 transition-colors" />
                 <Input
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 focus:border-violet-500 transition-colors"
                 />
               </div>
             </div>
@@ -281,7 +281,7 @@ export default function ProjectsPage() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="flex h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                className="flex h-9 rounded-md border-2 border-input bg-background px-3 py-1 text-sm hover:border-violet-400 focus:border-violet-500 transition-colors"
               >
                 <option value="All">All Categories</option>
                 {categories.map((category) => (
@@ -291,7 +291,7 @@ export default function ProjectsPage() {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="flex h-9 rounded-md border border-input bg-background px-3 py-1 text-sm"
+                className="flex h-9 rounded-md border-2 border-input bg-background px-3 py-1 text-sm hover:border-violet-400 focus:border-violet-500 transition-colors"
               >
                 <option value="All">All Status</option>
                 {statuses.map((status) => (
@@ -343,7 +343,7 @@ export default function ProjectsPage() {
           ))
         ) : (
           filteredProjects.map((project) => (
-          <Card key={project.id} className="hover:shadow-md transition-shadow">
+          <Card key={project.id} className="hover:shadow-lg hover:scale-[1.02] transition-all duration-200 border-l-4 border-l-violet-500">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="space-y-2">
@@ -416,10 +416,15 @@ export default function ProjectsPage() {
 
       {/* Form Modal */}
       {isFormOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <Card className="w-full max-w-2xl my-8">
-            <CardHeader>
-              <CardTitle>{editingProject ? "Edit Project" : "Add New Project"}</CardTitle>
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto animate-in fade-in">
+          <Card className="w-full max-w-2xl my-8 border-2 border-violet-500 shadow-2xl animate-in slide-in-from-bottom">
+            <CardHeader className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-950 dark:to-purple-950">
+              <CardTitle className="flex items-center gap-2">
+                <div className="p-2 bg-violet-100 dark:bg-violet-900 rounded-lg">
+                  <Plus className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+                </div>
+                {editingProject ? "Edit Project" : "Add New Project"}
+              </CardTitle>
               <CardDescription>
                 {editingProject ? "Update project information" : "Add a new project to your portfolio"}
               </CardDescription>
@@ -562,10 +567,10 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="flex gap-2 pt-4">
-                  <Button type="submit" className="flex-1">
+                  <Button type="submit" className="flex-1 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700">
                     {editingProject ? "Update" : "Add"} Project
                   </Button>
-                  <Button type="button" variant="outline" onClick={handleCancel}>
+                  <Button type="button" variant="outline" onClick={handleCancel} className="hover:bg-gray-100 dark:hover:bg-gray-800">
                     Cancel
                   </Button>
                 </div>

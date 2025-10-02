@@ -172,38 +172,42 @@ export default function MessagesPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Messages</h1>
+      <div className="flex items-center justify-between pb-6 border-b">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Messages</h1>
           <p className="text-muted-foreground">
             Manage contact form submissions ({unreadCount} unread of {totalCount} total)
           </p>
         </div>
         <div className="flex gap-2">
-          <Badge variant="secondary">{unreadCount} Unread</Badge>
-          <Badge variant="outline">{totalCount} Total</Badge>
+          {unreadCount > 0 && (
+            <Badge className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white border-0 animate-pulse">
+              {unreadCount} Unread
+            </Badge>
+          )}
+          <Badge variant="outline" className="border-2">{totalCount} Total</Badge>
         </div>
       </div>
 
       {/* Filters */}
-      <Card>
+      <Card className="border-l-4 border-l-blue-500 shadow-sm">
         <CardContent className="pt-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative group">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-blue-500 transition-colors" />
                 <Input
                   placeholder="Search messages..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 focus:border-blue-500 transition-colors"
                 />
               </div>
             </div>
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
-              className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+              className="flex h-10 rounded-md border-2 border-input bg-background px-3 py-2 text-sm hover:border-blue-400 focus:border-blue-500 transition-colors"
             >
               <option value="All">All Status</option>
               <option value="UNREAD">Unread</option>
@@ -365,31 +369,31 @@ export default function MessagesPage() {
       </div>
 
       {/* Stats */}
-      <Card>
-        <CardHeader>
+      <Card className="border-t-4 border-t-gradient-to-r from-blue-500 to-purple-500 shadow-md">
+        <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950">
           <CardTitle>Message Statistics</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{unreadCount}</div>
-              <div className="text-sm text-muted-foreground">Unread</div>
+            <div className="text-center p-4 rounded-lg bg-blue-50 dark:bg-blue-950 hover:scale-105 transition-transform">
+              <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">{unreadCount}</div>
+              <div className="text-sm text-muted-foreground mt-1">Unread</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">
+            <div className="text-center p-4 rounded-lg bg-green-50 dark:bg-green-950 hover:scale-105 transition-transform">
+              <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                 {messages.filter(msg => msg.status === "REPLIED").length}
               </div>
-              <div className="text-sm text-muted-foreground">Replied</div>
+              <div className="text-sm text-muted-foreground mt-1">Replied</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600">
+            <div className="text-center p-4 rounded-lg bg-yellow-50 dark:bg-yellow-950 hover:scale-105 transition-transform">
+              <div className="text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
                 {messages.filter(msg => msg.isArchived).length}
               </div>
-              <div className="text-sm text-muted-foreground">Archived</div>
+              <div className="text-sm text-muted-foreground mt-1">Archived</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-gray-600">{messages.length}</div>
-              <div className="text-sm text-muted-foreground">Total</div>
+            <div className="text-center p-4 rounded-lg bg-gray-50 dark:bg-gray-900 hover:scale-105 transition-transform">
+              <div className="text-3xl font-bold bg-gradient-to-r from-gray-600 to-slate-600 bg-clip-text text-transparent">{messages.length}</div>
+              <div className="text-sm text-muted-foreground mt-1">Total</div>
             </div>
           </div>
         </CardContent>
