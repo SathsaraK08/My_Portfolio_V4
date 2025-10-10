@@ -8,11 +8,6 @@ export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
     log: process.env.NODE_ENV === 'development' ? ['query', 'warn', 'error'] : ['warn', 'error'],
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL,
-      },
-    },
     // Optimize for connection pooling and performance
     errorFormat: 'minimal',
     transactionOptions: {
@@ -23,6 +18,11 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma
 }
+
+// Connect on initialization to avoid cold starts
+prisma.$connect().catch((error) => {
+  console.error('Failed to connect to database on startup:', error)
+})
 
 // Enhanced connection monitoring
 export async function checkPrismaConnection(): Promise<boolean> {

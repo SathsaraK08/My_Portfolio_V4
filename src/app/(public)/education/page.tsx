@@ -1,96 +1,60 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CalendarDays, MapPin, Award, BookOpen } from "lucide-react"
+import { CalendarDays, MapPin, Award, BookOpen, Loader2 } from "lucide-react"
 
-const education = [
-  {
-    id: 1,
-    institution: "Stanford University",
-    degree: "Master of Science",
-    field: "Computer Science",
-    location: "Stanford, CA",
-    startDate: "2020",
-    endDate: "2022",
-    isCurrent: false,
-    grade: "3.9 GPA",
-    description: "Specialized in Machine Learning and Software Engineering. Completed advanced coursework in algorithms, distributed systems, and artificial intelligence.",
-    achievements: [
-      "Dean's List for Academic Excellence",
-      "Graduate Research Assistant in AI Lab",
-      "Published 2 papers in peer-reviewed conferences",
-      "Teaching Assistant for Data Structures course"
-    ],
-    coursework: [
-      "Advanced Algorithms",
-      "Machine Learning",
-      "Distributed Systems",
-      "Software Engineering",
-      "Database Systems",
-      "Computer Vision"
-    ]
-  },
-  {
-    id: 2,
-    institution: "University of California, Berkeley",
-    degree: "Bachelor of Science",
-    field: "Computer Science",
-    location: "Berkeley, CA",
-    startDate: "2016",
-    endDate: "2020",
-    isCurrent: false,
-    grade: "3.8 GPA, Magna Cum Laude",
-    description: "Comprehensive undergraduate program with focus on software development, data structures, and computer systems. Active participant in coding competitions and hackathons.",
-    achievements: [
-      "Magna Cum Laude graduate",
-      "President of Computer Science Club",
-      "Winner of UC Berkeley Hackathon 2019",
-      "Internship at Google Summer 2019",
-      "ACM Programming Competition Finalist"
-    ],
-    coursework: [
-      "Data Structures & Algorithms",
-      "Computer Systems",
-      "Software Engineering",
-      "Web Development",
-      "Mobile App Development",
-      "Cybersecurity Fundamentals"
-    ]
-  },
-  {
-    id: 3,
-    institution: "Community College of San Francisco",
-    degree: "Associate of Science",
-    field: "Mathematics",
-    location: "San Francisco, CA",
-    startDate: "2014",
-    endDate: "2016",
-    isCurrent: false,
-    grade: "4.0 GPA",
-    description: "Foundation in mathematics and general education requirements. Developed strong analytical and problem-solving skills that became crucial for computer science studies.",
-    achievements: [
-      "Perfect 4.0 GPA",
-      "Mathematics Tutor for 2 years",
-      "Phi Theta Kappa Honor Society",
-      "Outstanding Student in Mathematics Award"
-    ],
-    coursework: [
-      "Calculus I, II, III",
-      "Linear Algebra",
-      "Discrete Mathematics",
-      "Statistics",
-      "Physics",
-      "English Composition"
-    ]
-  }
-]
-
-
+type Education = {
+  id: string
+  institution: string
+  degree: string
+  field: string | null
+  location: string | null
+  startDate: string
+  endDate: string | null
+  isCurrent: boolean
+  grade: string | null
+  description: string | null
+  achievements: string[]
+}
 
 export default function EducationPage() {
+  const [education, setEducation] = useState<Education[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const response = await fetch('/api/public/education')
+        if (response.ok) {
+          const data = await response.json()
+          setEducation(data)
+        }
+      } catch (error) {
+        console.error('Failed to fetch education:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchEducation()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin mx-auto text-blue-500" />
+          <p className="text-muted-foreground">Loading education...</p>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
+      <section className="relative pt-24 pb-16 md:pb-24 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
         {/* Background decorations */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-1/4 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
@@ -98,42 +62,19 @@ export default function EducationPage() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
         </div>
 
-        <div className="container mx-auto px-4 text-center relative z-10 space-y-8">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-            Education
+        <div className="container mx-auto px-4 text-center relative z-10 space-y-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+            Academic Background
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
             My academic journey and continuous learning path in computer science and technology.
           </p>
         </div>
       </section>
-      
-      {/* Section Divider */}
-      <div className="relative py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
-        </div>
-        <div className="relative flex justify-center">
-          <div className="bg-white dark:bg-gray-900 px-6">
-            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
-          </div>
-        </div>
-      </div>
 
       {/* Education Timeline */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold">
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Academic Background
-              </span>
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A comprehensive education in computer science from foundational mathematics 
-              to advanced graduate studies.
-            </p>
-          </div>
 
           <div className="relative max-w-6xl mx-auto">
             {/* Modern Timeline line with gradient and glow effect */}
@@ -170,7 +111,7 @@ export default function EducationPage() {
                                   <CardTitle className="text-2xl font-bold group-hover:text-blue-600 transition-colors">{edu.degree}</CardTitle>
                                   <div className="flex items-center gap-2">
                                     <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white border-0 px-4 py-1 text-sm font-semibold">
-                                      {edu.startDate} - {edu.endDate}
+                                      {new Date(edu.startDate).getFullYear()} - {edu.isCurrent ? 'Present' : edu.endDate ? new Date(edu.endDate).getFullYear() : 'N/A'}
                                     </Badge>
                                   </div>
                                 </div>
@@ -220,25 +161,6 @@ export default function EducationPage() {
                                 </div>
                               </div>
                             )}
-
-                            {/* Enhanced Coursework */}
-                            {edu.coursework && edu.coursework.length > 0 && (
-                              <div className="space-y-4">
-                                <h4 className="font-bold text-lg flex items-center gap-3">
-                                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
-                                    <BookOpen className="h-4 w-4 text-white" />
-                                  </div>
-                                  Relevant Coursework
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {edu.coursework.map((course) => (
-                                    <Badge key={course} className="text-sm bg-gradient-to-r from-blue-500/15 to-purple-500/15 text-blue-700 dark:text-blue-300 border border-blue-200/60 dark:border-blue-700/60 px-3 py-1 hover:from-blue-500/25 hover:to-purple-500/25 transition-all duration-300">
-                                      {course}
-                                    </Badge>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
                           </CardContent>
                         </Card>
                       </div>
@@ -251,27 +173,20 @@ export default function EducationPage() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 backdrop-blur-sm rounded-2xl p-8 border border-blue-200/50 dark:border-blue-800/50">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
-              <div className="space-y-2">
-                <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">8+</div>
-                <div className="text-sm text-muted-foreground">Years of Education</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">3.85</div>
-                <div className="text-sm text-muted-foreground">Overall GPA</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">15+</div>
-                <div className="text-sm text-muted-foreground">Awards & Honors</div>
-              </div>
+      {/* Empty State */}
+      {education.length === 0 && (
+        <section className="py-16">
+          <div className="container mx-auto px-4 text-center">
+            <div className="max-w-md mx-auto space-y-4">
+              <BookOpen className="h-16 w-16 mx-auto text-muted-foreground" />
+              <h3 className="text-2xl font-bold">No Education Records</h3>
+              <p className="text-muted-foreground">
+                Education information will be displayed here once added.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Section Divider */}
       <div className="relative py-4">
