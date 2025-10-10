@@ -122,6 +122,10 @@ export default function ProjectsPage() {
 
         <div className="container mx-auto px-4 text-center relative z-10 space-y-8">
           <FadeIn className="space-y-4 mb-8">
+            <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
+              <Folder className="h-6 w-6 text-purple-500" />
+              <span className="text-muted-foreground font-medium">Portfolio Showcase</span>
+            </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
               My Projects
             </h1>

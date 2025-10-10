@@ -63,6 +63,10 @@ export default function EducationPage() {
         </div>
 
         <div className="container mx-auto px-4 text-center relative z-10 space-y-6">
+          <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-card/50 backdrop-blur-sm rounded-full border border-border/50">
+            <span className="text-2xl">🎓</span>
+            <span className="text-muted-foreground font-medium">Academic Journey</span>
+          </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
             Academic Background
           </h1>
@@ -71,6 +75,18 @@ export default function EducationPage() {
           </p>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="relative py-4">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+        </div>
+        <div className="relative flex justify-center">
+          <div className="bg-white dark:bg-gray-900 px-6">
+            <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+          </div>
+        </div>
+      </div>
 
       {/* Education Timeline */}
       <section className="py-16 md:py-24">
